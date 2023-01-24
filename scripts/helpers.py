@@ -1,12 +1,22 @@
 import subprocess as sp
 
 def do(command):
-    process = sp.Popen(command,stdout=sp.PIPE, 
-                       stderr=sp.PIPE)
-    stdout, _ = process.communicate()
-    return stdout
+    output = sp.run(command, capture_output=True)
+    if output.stderr:
+        print(bytes.decode(output.stderr))
+    else:
+        print(bytes.decode(output.stdout))
 
-def show(some_bytes):
-    for line in bytes.decode(some_bytes).splitlines():
-        print(line)
+pod = {
+    'name' : 'vaddb'
+}
+
+db = {
+    'id_file': 'tmp/vaddb_container_id.txt',
+    'name' : 'vaddb_pg',
+    'port_map' : '33333:5432',
+    'registry_image' : 'docker.io/library/postgres',
+    'superuser_password' : 'mysecretpassword'
+}
+
 
