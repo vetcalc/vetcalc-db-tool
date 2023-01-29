@@ -8,30 +8,17 @@ g_combinations = []
 
 def main():
    
-
-    # Parsing the Animals
+    # Make entities by parsing csv
     make_animals(g_animals)
-    show_items(g_animals, "Animals:")
-   
-    # Parsing the Drugs
     make_drugs(g_drugs)
-
-    # Parsing the Ingredients
     make_ingredients(g_ingredients)
-    # Parsing the Combinations
     make_combinations(g_combinations)
 
-
-    with open('drugs.csv', newline='') as csv_file:
-        reader = csv.reader(csv_file, quotechar='|')
-        
-        for idx, row in enumerate(reader):
-            if idx == 0:
-                continue # ignore the header
-            if idx > 1:
-                break
-            # parse_row(row)
-            print(row)
+    # Pretty print the results
+    show_items(g_animals, "Animals:")
+    show_items(g_drugs, "Drugs:")
+    show_items(g_ingredients, "Ingredients:")
+    show_items(g_combinations, "Combinations:")
 
 def show_items(storage, title):
     print(title)
