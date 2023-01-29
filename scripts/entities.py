@@ -29,13 +29,13 @@ class Ingredient:
     method                  -- how the ingredient is administered in the associated combinatino
     '''
 
-    def __init__(self, drug, concentration, concentration_unit, dosage, dosage_unit, method):
-        self.drug = drug
-        self.concentration = concentration
-        self.concenctration_unit = concentration_unit
-        self.dosage = dosage
-        self.dosage_unit = dosage_unit
-        self.method = method
+    def __init__(self, info):
+        self.drug = info[0]
+        self.concentration = info[1]
+        self.concenctration_unit = info[2] 
+        self.dosage = info[3] 
+        self.dosage_unit = info[4] 
+        self.method = info[5] 
 
 class Combination:
     '''
@@ -62,7 +62,7 @@ class Combination:
         self.combined_with = ""
         self.purpose = ""
         self.notes = ""
-        self.reference == ""
+        self.reference = ""
 
     def add_ingredient(self, ingredient):
         self.ingredient.append(ingredient)
@@ -81,8 +81,8 @@ class Animal:
     heart_rate          -- in bpm
     respiratory_rate    -- in ???
     '''
-    def __init__(self, name, temperature, heart_rate, respiratory_rate):
+    def __init__(self, name):
         self.name = name
-        self.temperature = temperature
-        self.heart_rate = heart_rate
-        self.respiratory_rate = respiratory_rate
+        self.temperature = 0 
+        self.heart_rate = 0 
+        self.respiratory_rate = 0 
