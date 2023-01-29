@@ -16,6 +16,7 @@ class Drug:
     def show(self):
         print(self.name)
 
+
 class Ingredient:
     '''
     Purpose:
@@ -39,6 +40,15 @@ class Ingredient:
         self.dosage = info[3] 
         self.dosage_unit = info[4] 
         self.method = info[5] 
+
+    def show(self):
+        visual = (f"{self.drug} :\n"
+                  f"\t{self.concentration} {self.concentration_unit}\n"
+                  f"\t{self.dosage} {self.dosage_unit}\n"
+                  f"\t{self.method}"
+                 )
+        print(visual)
+
 
 class Combination:
     '''
@@ -69,6 +79,19 @@ class Combination:
 
     def add_ingredient(self, ingredient):
         self.ingredient.append(ingredient)
+
+    def show(self):
+        juvenile = "juvenile" if self.for_juvenile else ""
+        visual = (f"Combo for {juvenile} {self.animal}\n"
+                  f"\tGoes with {self.combined_with}\n"
+                  f"\tContains: {self.ingredients}\n"
+                  f"\tUsed for {self.purpose}\n"
+                  f"\tNotes: {self.notes}\n"
+                  f"\tFound in: {self.reference}\n"
+
+                 )
+        print(visual)
+
 
 class Animal:
     '''
