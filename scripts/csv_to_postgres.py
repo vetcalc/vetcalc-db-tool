@@ -14,6 +14,8 @@ g_drugs = []
 g_ingredients = []
 g_combinations = []
 
+# TODO: convert starting csv into csv with ingredients, drugs, and animals by id
+
 def main():
    
     # Make entities by parsing csv
@@ -83,42 +85,6 @@ def _add_ingredient(storage, row, drug_name_col):
             ingredient_info.append(row[drug_name_col + i])
 
         storage.append(ent.Ingredient(ingredient_info))
-
-def make_combinations(storage):
-    pass
-
-def parse_row(row):
-    column = 0
-
-    animal = ent.Animal(row[column])
-    column += 1
-
-    for_juvenile = row[column]
-    column += 1
-   
-    combination = ent.Combination(animal.name, for_juvenile)
-
-    combination.combined_with = row[column+1]
-    column += 1
-
-    for j in range(3):
-        temp_ingredient = []
-
-        for i in range(6):
-            temp_ingredient.append(row[column])
-            column += 1
-
-        drug = ent.Drug(temp_ingredient[0])
-        ingredient = ent.Ingredient(temp_ingredient)
-
-    combination.purpose = row[column]
-    column += 1
-
-    combination.notes = row[column]
-    column += 1
-
-    combination.reference = row[column]
-    column += 1
 
 if __name__ == "__main__":
     main()
