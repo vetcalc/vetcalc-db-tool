@@ -2,8 +2,12 @@ import csv
 import entities as ent
 
 CSV_FILENAME = "drugs.csv"
-NUM_DRUG_ATTR = 6
+
+NUM_INGREDIENT_ATTR = 6
+
 FIRST_DRUG_NAME_COL = 3
+SECOND_DRUG_NAME_COL = FIRST_DRUG_NAME_COL + NUM_INGREDIENT_ATTR
+THIRD_DRUG_NAME_COL = SECOND_DRUG_NAME_COL + NUM_INGREDIENT_ATTR
 
 g_animals = []
 g_drugs = []
@@ -51,8 +55,8 @@ def make_drugs(storage):
             if idx == 0:
                 continue # ignore the header
             _add_drug(drugs, row[FIRST_DRUG_NAME_COL])  
-            _add_drug(drugs, row[FIRST_DRUG_NAME_COL + NUM_DRUG_ATTR]) 
-            _add_drug(drugs, row[FIRST_DRUG_NAME_COL + 2 * NUM_DRUG_ATTR]) 
+            _add_drug(drugs, row[SECOND_DRUG_NAME_COL])  
+            _add_drug(drugs, row[THIRD_DRUG_NAME_COL])  
  
     for drug in drugs:
         storage.append(ent.Drug(drug))
@@ -62,7 +66,23 @@ def _add_drug(a_set, to_add):
         a_set.add(to_add)
 
 def make_ingredients(storage):
-    pass
+    with open(CSV_FILENAME, newline='') as csv_file:
+        reader = csv.reader(csv_file, quotechar='|') 
+        for idx, row in enumerate(reader):
+            if idx == 0:
+                continue # ignore the header
+            _add_ingredient(storage, row, FIRST_DRUG_NAME_COL)  
+            _add_ingredient(storage, row, SECOND_DRUG_NAME_COL)  
+            _add_ingredient(storage, row, THIRD_DRUG_NAME_COL)  
+
+def _add_ingredient(storage, row, drug_name_col):
+    if row[drug_name_col]:
+        ingredient_info = []
+
+        for i in range(NUM_INGREDIENT_ATTR):
+            ingredient_info.append(row[drug_name_col + i])
+
+        storage.append(ent.Ingredient(ingredient_info))
 
 def make_combinations(storage):
     pass

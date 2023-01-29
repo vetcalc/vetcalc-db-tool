@@ -36,7 +36,7 @@ class Ingredient:
     def __init__(self, info):
         self.drug = info[0]
         self.concentration = info[1]
-        self.concenctration_unit = info[2] 
+        self.concentration_unit = info[2] 
         self.dosage = info[3] 
         self.dosage_unit = info[4] 
         self.method = info[5] 
