@@ -1,6 +1,8 @@
 import csv
 import entities as ent
 
+CSV_FILENAME = "drugs.csv"
+
 g_animals = []
 g_drugs = []
 g_ingredients = []
@@ -28,7 +30,7 @@ def show_items(storage, title):
 def make_animals(storage):
     names = set()
 
-    with open('drugs.csv', newline='') as csv_file:
+    with open(CSV_FILENAME, newline='') as csv_file:
         reader = csv.reader(csv_file, quotechar='|') 
         for idx, row in enumerate(reader):
             if idx == 0:
@@ -39,7 +41,17 @@ def make_animals(storage):
         storage.append(ent.Animal(name))
 
 def make_drugs(storage):
-    pass
+    drugs = set()
+
+    with open(CSV_FILENAME, newline='') as csv_file:
+        reader = csv.reader(csv_file, quotechar='|') 
+        for idx, row in enumerate(reader):
+            if idx == 0:
+                continue # ignore the header
+            drugs.add(row[0])
+
+    for drug in drugs:
+        storage.append(ent.Drug(drug))
 
 def make_ingredients(storage):
     pass
