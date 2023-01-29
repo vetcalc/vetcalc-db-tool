@@ -2,13 +2,26 @@ import csv
 import entities as ent
 
 g_animals = []
+g_drugs = []
+g_ingredients = []
+g_combinations = []
 
 def main():
    
-    make_animals(g_animals) 
-    for animal in g_animals:
-        print(animal.name)
-    
+
+    # Parsing the Animals
+    make_animals(g_animals)
+    show_items(g_animals, "Animals:")
+   
+    # Parsing the Drugs
+    make_drugs(g_drugs)
+
+    # Parsing the Ingredients
+    make_ingredients(g_ingredients)
+    # Parsing the Combinations
+    make_combinations(g_combinations)
+
+
     with open('drugs.csv', newline='') as csv_file:
         reader = csv.reader(csv_file, quotechar='|')
         
@@ -19,7 +32,12 @@ def main():
                 break
             # parse_row(row)
             print(row)
-   
+
+def show_items(storage, title):
+    print(title)
+    for item in storage:
+        item.show()
+
 def make_animals(storage):
     names = set()
 
@@ -32,6 +50,15 @@ def make_animals(storage):
 
     for name in names:
         storage.append(ent.Animal(name))
+
+def make_drugs(storage):
+    pass
+
+def make_ingredients(storage):
+    pass
+
+def make_combinations(storage):
+    pass
 
 def parse_row(row):
     column = 0

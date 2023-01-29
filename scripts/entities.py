@@ -13,6 +13,9 @@ class Drug:
     def __init__(self, name):
         self.name = name
 
+    def show(self):
+        print(self.name)
+
 class Ingredient:
     '''
     Purpose:
@@ -78,11 +81,19 @@ class Animal:
 
     name                -- string
     temperature         -- in celsius
-    heart_rate          -- in bpm
-    respiratory_rate    -- in ???
+    heart_rate          -- in beats per minute
+    respiratory_rate    -- in breaths per minute
     '''
     def __init__(self, name):
         self.name = name
         self.temperature = 0 
         self.heart_rate = 0 
         self.respiratory_rate = 0 
+
+    def show(self):
+        visual = (f"{self.name} :\n"
+                  f"\t{self.temperature} C \n"
+                  f"\t{self.heart_rate} beats/min \n"
+                  f"\t{self.respiratory_rate} breaths/min"
+                 )
+        print(visual)
