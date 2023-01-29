@@ -2,6 +2,8 @@ import csv
 import entities as ent
 
 CSV_FILENAME = "drugs.csv"
+NUM_DRUG_ATTR = 6
+FIRST_DRUG_NAME_COL = 3
 
 g_animals = []
 g_drugs = []
@@ -48,10 +50,16 @@ def make_drugs(storage):
         for idx, row in enumerate(reader):
             if idx == 0:
                 continue # ignore the header
-            drugs.add(row[0])
-
+            _add_drug(drugs, row[FIRST_DRUG_NAME_COL])  
+            _add_drug(drugs, row[FIRST_DRUG_NAME_COL + NUM_DRUG_ATTR]) 
+            _add_drug(drugs, row[FIRST_DRUG_NAME_COL + 2 * NUM_DRUG_ATTR]) 
+ 
     for drug in drugs:
         storage.append(ent.Drug(drug))
+
+def _add_drug(a_set, to_add):
+    if to_add:
+        a_set.add(to_add)
 
 def make_ingredients(storage):
     pass
