@@ -1,3 +1,5 @@
+from entity_id import EntityId as eid
+
 class Drug:
     ''' 
     Purpose:
@@ -7,14 +9,18 @@ class Drug:
 
     Attributes:
 
+    id
     name           -- string
     '''
-
     def __init__(self, name):
+        self.id = eid("d", 0)
         self.name = name
 
     def show(self):
-        print(self.name)
+        visual = (f"{self.id.get()}: \n"
+                  f"\t{self.name}"
+                 )
+        print(visual)
 
 
 class Ingredient:
@@ -24,7 +30,8 @@ class Ingredient:
     Contains the drug as used in a combination with contextual information
     
     Attributes:
-    
+   
+    id
     drug                    -- singular
     concentration           -- single number
     concentation_unit       -- string
@@ -34,6 +41,7 @@ class Ingredient:
     '''
 
     def __init__(self, info):
+        self.id = eid("i", 0)
         self.drug = info[0]
         self.concentration = info[1]
         self.concentration_unit = info[2] 
@@ -42,7 +50,8 @@ class Ingredient:
         self.method = info[5] 
 
     def show(self):
-        visual = (f"{self.drug} :\n"
+        visual = (f"{self.id.get()} :\n"
+                  f"\t{self.drug}\n"
                   f"\t{self.concentration} {self.concentration_unit}\n"
                   f"\t{self.dosage} {self.dosage_unit}\n"
                   f"\t{self.method}"
@@ -60,6 +69,7 @@ class Combination:
 
     Attributes:
 
+    id
     ingredients       -- as a list
     animal            -- singular
     for_juvenile      -- if the combination is for a juvenile animal
@@ -69,6 +79,7 @@ class Combination:
     reference        -- where the info is found
     '''
     def __init__(self, animal, for_juvenile):
+        self.id = eid("c", 0)
         self.animal = animal
         self.for_juvenile = for_juvenile
         self.ingredients = []
@@ -82,7 +93,7 @@ class Combination:
 
     def show(self):
         juvenile = "juvenile" if self.for_juvenile else ""
-        visual = (f"Combo for {juvenile} {self.animal}\n"
+        visual = (f"Combo {self.id.get()} for {juvenile} {self.animal}\n"
                   f"\tGoes with {self.combined_with}\n"
                   f"\tContains: {self.ingredients}\n"
                   f"\tUsed for {self.purpose}\n"
@@ -102,19 +113,22 @@ class Animal:
 
     Attributes:
 
+    id
     name                -- string
     temperature         -- in celsius
     heart_rate          -- in beats per minute
     respiratory_rate    -- in breaths per minute
     '''
     def __init__(self, name):
+        self.id = eid("a", 0)
         self.name = name
         self.temperature = 0 
         self.heart_rate = 0 
         self.respiratory_rate = 0 
 
     def show(self):
-        visual = (f"{self.name} :\n"
+        visual = (f"{self.id.get()} :\n"
+                  f"\t{self.name}\n"
                   f"\t{self.temperature} C \n"
                   f"\t{self.heart_rate} beats/min \n"
                   f"\t{self.respiratory_rate} breaths/min"

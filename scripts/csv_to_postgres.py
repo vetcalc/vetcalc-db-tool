@@ -13,8 +13,16 @@ THIRD_DRUG_NAME_COL = SECOND_DRUG_NAME_COL + NUM_INGREDIENT_ATTR
 
 def main():
     entities = make_entities()
+    make_references(entities)
     show_entities(entities)
     split_entities_into_csv(entities)
+
+def make_references(entities):
+    '''
+    Converts specific names in entities to reference ids in other entities
+    '''
+    replace_ingredient_attributes_with_ids(entities)
+    
 
 def make_entities():
     entities = dict()
@@ -120,8 +128,8 @@ def split_animals_into_csv(storage):
         file.write(header) 
 
         for idx, animal in enumerate(storage):
-            resource_prefix = "a_"
-            row = (f"{resource_prefix}{idx+1},"
+            animal.id.set(idx+1)
+            row = (f"{animal.id.get()},"
                    f"{animal.name},"
                    f"{animal.temperature},"
                    f"{animal.heart_rate},"
@@ -138,8 +146,8 @@ def split_drugs_into_csv(storage):
         file.write(header) 
 
         for idx, drug in enumerate(storage):
-            resource_prefix = "d_"
-            row = (f"{resource_prefix}{idx+1},"
+            drug.id.set(idx+1)
+            row = (f"{drug.id.get()},"
                    f"{drug.name}\n"
                   )
             file.write(row)
@@ -153,8 +161,8 @@ def split_ingredients_into_csv(storage):
         file.write(header) 
 
         for idx, ingredient in enumerate(storage):
-            resource_prefix = "i_"
-            row = (f"{resource_prefix}{idx+1},"
+            ingredient.id.set(idx+1)
+            row = (f"{ingredient.id.get()},"
                    f"{ingredient.drug},"
                    f"{ingredient.concentration},"
                    f"{ingredient.concentration_unit},"
@@ -173,10 +181,46 @@ def split_combinations_into_csv(storage):
         file.write(header) 
 
         for idx, combination in enumerate(storage):
-            resource_prefix = "c_"
-            row = (f"{resource_prefix}{idx+1}\n"
+            combination.id.set(idx+1)
+            row = (f"{combination.id.get()}\n"
                   )
             file.write(row)
+
+def search_drugs_by_name(name, drugs):
+    for drug in drugs:
+        if drug.name == name:
+            return drug.id
+    # no match
+    return ""
+
+def replace_ingredient_attributes_with_ids(entities):
+    '''
+    Replace drug names with their correpsonding ids from the Drug class
+    '''
+
+    for ingredient in entities["ingredients"]:
+        drug_id = search_drugs_by_name(ingredient.drug, entities["drugs"])
+        if drug_id.is_set():
+            ingredient.drug = {drug_id.get()}
+
+def replace_combination_attributes_with_ids(entities):
+    '''
+    Take the original csv, which has no concept of ids for each entity (execept combinations)
+    and replace the objects with their corresponsding ids from the various make_ commands.
+
+    This will reduce the number of colunmns as compared to the original csv
+    '''
+    pass    
+    # reduced_combinations = []
+
+    # with open(CSV_FILENAME, newline='') as csv_file:
+    #     reader = csv.reader(csv_file, quotechar='|') 
+        # for idx, row in enumerate(reader):
+        #     if idx == 0:
+        #         continue # ignore the header
+            # replace
+
+
 
 if __name__ == "__main__":
     main()
