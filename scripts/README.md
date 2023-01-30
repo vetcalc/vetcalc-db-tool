@@ -11,3 +11,8 @@ Consequently, the scripts are ran with
 ```
 python my_script.py
 ```
+
+# Also Included
+
+is a script to convert the csv file in this folder to some python objects
+for easier manipulation.
