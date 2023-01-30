@@ -5,7 +5,7 @@ from operator import attrgetter
 CSV_FILENAME = "drugs.csv"
 DATABASE_IMPORT_PREFIX = "for_database_import"
 
-NUM_INGREDIENT_ATTR = 6
+NUM_INGREDIENT_ATTR = 6 # not including id
 
 FIRST_DRUG_NAME_COL = 3
 SECOND_DRUG_NAME_COL = FIRST_DRUG_NAME_COL + NUM_INGREDIENT_ATTR
@@ -14,7 +14,7 @@ THIRD_DRUG_NAME_COL = SECOND_DRUG_NAME_COL + NUM_INGREDIENT_ATTR
 def main():
     entities = make_entities()
     make_references(entities)
-    show_entities(entities)
+    # show_entities(entities)
     split_entities_into_csv(entities)
 
 def make_references(entities):
@@ -60,14 +60,18 @@ def make_animals():
     animals = []
 
     with open(CSV_FILENAME, newline='') as csv_file:
-        reader = csv.reader(csv_file, quotechar='|') 
+        reader = csv.reader(csv_file) 
         for idx, row in enumerate(reader):
             if idx == 0:
                 continue # ignore the header
             names.add(row[0])
 
     for name in sorted(names):
-        animals.append(ent.Animal(name))
+        animals.append(ent.Animal(remove_whitespace(name)))
+
+    # add on the ids
+    for idx, animal in enumerate(animals):
+        animal.id.set(idx+1)
 
     return animals
 
@@ -76,7 +80,7 @@ def make_drugs():
     drugs = []
 
     with open(CSV_FILENAME, newline='') as csv_file:
-        reader = csv.reader(csv_file, quotechar='|') 
+        reader = csv.reader(csv_file) 
         for idx, row in enumerate(reader):
             if idx == 0:
                 continue # ignore the header
@@ -87,17 +91,21 @@ def make_drugs():
     for drug in sorted(names):
         drugs.append(ent.Drug(drug))
 
+    # add on the ids
+    for idx, drug in enumerate(drugs):
+        drug.id.set(idx+1)
+
     return drugs
 
 def _add_drug(a_set, to_add):
     if to_add:
-        a_set.add(to_add)
+        a_set.add(remove_whitespace(to_add))
 
 def make_ingredients():
     ingredients = []
 
     with open(CSV_FILENAME, newline='') as csv_file:
-        reader = csv.reader(csv_file, quotechar='|') 
+        reader = csv.reader(csv_file) 
         for idx, row in enumerate(reader):
             if idx == 0:
                 continue # ignore the header
@@ -105,16 +113,32 @@ def make_ingredients():
             _add_ingredient(ingredients, row, SECOND_DRUG_NAME_COL)  
             _add_ingredient(ingredients, row, THIRD_DRUG_NAME_COL)  
 
-    return sorted(ingredients, key=attrgetter("drug", "concentration", "dosage", "method"))
+    sorted_ingredients = sorted(ingredients, key=attrgetter("drug", "concentration", "dosage", "method"))
+    # add on the ids
+    for idx, ingredient in enumerate(sorted_ingredients):
+        ingredient.id.set(idx+1)
+
+    return sorted_ingredients
+
 
 def _add_ingredient(storage, row, drug_name_col):
     if row[drug_name_col]:
         ingredient_info = []
 
         for i in range(NUM_INGREDIENT_ATTR):
-            ingredient_info.append(row[drug_name_col + i])
-
+            info = row[drug_name_col + i]
+            no_spacing = remove_whitespace(info)
+            ingredient_info.append(no_spacing)
+       
         storage.append(ent.Ingredient(ingredient_info))
+
+def remove_whitespace(item):
+    try:
+        item = "".join(item.split())
+    except:
+        pass
+    finally:
+        return item
 
 def make_combinations():
     return []
@@ -197,11 +221,11 @@ def replace_ingredient_attributes_with_ids(entities):
     '''
     Replace drug names with their correpsonding ids from the Drug class
     '''
-
-    for ingredient in entities["ingredients"]:
+    for idx, ingredient in enumerate(entities["ingredients"]):
         drug_id = search_drugs_by_name(ingredient.drug, entities["drugs"])
-        if drug_id.is_set():
-            ingredient.drug = {drug_id.get()}
+
+        if drug_id:
+            ingredient.drug = drug_id.get()
 
 def replace_combination_attributes_with_ids(entities):
     '''
@@ -214,7 +238,7 @@ def replace_combination_attributes_with_ids(entities):
     # reduced_combinations = []
 
     # with open(CSV_FILENAME, newline='') as csv_file:
-    #     reader = csv.reader(csv_file, quotechar='|') 
+    #     reader = csv.reader(csv_file) 
         # for idx, row in enumerate(reader):
         #     if idx == 0:
         #         continue # ignore the header

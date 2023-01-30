@@ -18,9 +18,3 @@ class EntityId:
 
     def set(self, id):
         self.id = id
-
-    def is_set(self):
-        if self.id != 0:
-            return True
-        else:
-            return False
