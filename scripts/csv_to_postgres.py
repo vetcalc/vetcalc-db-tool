@@ -11,30 +11,34 @@ SECOND_DRUG_NAME_COL = FIRST_DRUG_NAME_COL + NUM_INGREDIENT_ATTR
 THIRD_DRUG_NAME_COL = SECOND_DRUG_NAME_COL + NUM_INGREDIENT_ATTR
 
 def main():
-    make_entities()
-    show_entities()
-    split_entities_into_csv()
+    entities = make_entities()
+    show_entities(entities)
+    split_entities_into_csv(entities)
 
 def make_entities():
+    entities = dict()
+
     # Make entities by parsing csv
-    animals = make_animals()
-    drugs = make_drugs()
-    ingredients = make_ingredients()
-    combinations =  make_combinations()
+    entities["animals"] = make_animals()
+    entities["drugs"] = make_drugs()
+    entities["ingredients"] = make_ingredients()
+    entities["combinations"] =  make_combinations()
+    
+    return entities
 
-def show_entities():
+def show_entities(entities):
     # Pretty print the results
-    show_items(animals, "Animals:")
-    show_items(drugs, "Drugs:")
-    show_items(ingredients, "Ingredients:")
-    show_items(combinations, "Combinations:")
+    show_items(entities["animals"], "Animals:")
+    show_items(entities["drugs"], "Drugs:")
+    show_items(entities["ingredients"], "Ingredients:")
+    show_items(entities["combinations"], "Combinations:")
 
-def split_entities_into_csv():
+def split_entities_into_csv(entities):
     # split the main csv into smaller files ready for imporation
-    split_animals_into_csv(animals)
-    split_drugs_into_csv(drugs)
-    split_ingredients_into_csv(ingredients)
-    split_combinations_into_csv(combinations)
+    split_animals_into_csv(entities["animals"])
+    split_drugs_into_csv(entities["drugs"])
+    split_ingredients_into_csv(entities["ingredients"])
+    split_combinations_into_csv(entities["combinations"])
 
 
 def show_items(storage, title):
