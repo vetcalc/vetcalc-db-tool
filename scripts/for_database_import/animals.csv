@@ -1,8 +1,8 @@
 id,name,temperature,heart_rate,respiratory_rate
-a_1,Cattle,0,0,0
+a_1,Camelid,0,0,0
 a_2,Cat,0,0,0
-a_3,Dog,0,0,0
-a_4,Equine,0,0,0
-a_5,Camelid,0,0,0
+a_3,Cattle,0,0,0
+a_4,Dog,0,0,0
+a_5,Equine,0,0,0
 a_6,Sheep Goats,0,0,0
 a_7,Swine,0,0,0

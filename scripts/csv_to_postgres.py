@@ -1,5 +1,6 @@
 import csv
 import entities as ent
+from operator import attrgetter
 
 CSV_FILENAME = "drugs.csv"
 DATABASE_IMPORT_PREFIX = "for_database_import"
@@ -57,7 +58,7 @@ def make_animals():
                 continue # ignore the header
             names.add(row[0])
 
-    for name in names:
+    for name in sorted(names):
         animals.append(ent.Animal(name))
 
     return animals
@@ -75,7 +76,7 @@ def make_drugs():
             _add_drug(names, row[SECOND_DRUG_NAME_COL])  
             _add_drug(names, row[THIRD_DRUG_NAME_COL])  
  
-    for drug in names:
+    for drug in sorted(names):
         drugs.append(ent.Drug(drug))
 
     return drugs
@@ -96,7 +97,7 @@ def make_ingredients():
             _add_ingredient(ingredients, row, SECOND_DRUG_NAME_COL)  
             _add_ingredient(ingredients, row, THIRD_DRUG_NAME_COL)  
 
-    return ingredients
+    return sorted(ingredients, key=attrgetter("drug", "concentration", "dosage", "method"))
 
 def _add_ingredient(storage, row, drug_name_col):
     if row[drug_name_col]:
