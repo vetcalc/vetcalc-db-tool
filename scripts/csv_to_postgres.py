@@ -152,7 +152,6 @@ def split_animals_into_csv(storage):
         file.write(header) 
 
         for idx, animal in enumerate(storage):
-            animal.id.set(idx+1)
             row = (f"{animal.id.get()},"
                    f"{animal.name},"
                    f"{animal.temperature},"
@@ -170,7 +169,6 @@ def split_drugs_into_csv(storage):
         file.write(header) 
 
         for idx, drug in enumerate(storage):
-            drug.id.set(idx+1)
             row = (f"{drug.id.get()},"
                    f"{drug.name}\n"
                   )
@@ -185,7 +183,6 @@ def split_ingredients_into_csv(storage):
         file.write(header) 
 
         for idx, ingredient in enumerate(storage):
-            ingredient.id.set(idx+1)
             row = (f"{ingredient.id.get()},"
                    f"{ingredient.drug},"
                    f"{ingredient.concentration},"
@@ -205,7 +202,6 @@ def split_combinations_into_csv(storage):
         file.write(header) 
 
         for idx, combination in enumerate(storage):
-            combination.id.set(idx+1)
             row = (f"{combination.id.get()}\n"
                   )
             file.write(row)
