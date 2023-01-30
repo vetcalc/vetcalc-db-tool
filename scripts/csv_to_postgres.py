@@ -11,24 +11,31 @@ SECOND_DRUG_NAME_COL = FIRST_DRUG_NAME_COL + NUM_INGREDIENT_ATTR
 THIRD_DRUG_NAME_COL = SECOND_DRUG_NAME_COL + NUM_INGREDIENT_ATTR
 
 def main():
-   
+    make_entities()
+    show_entities()
+    split_entities_into_csv()
+
+def make_entities():
     # Make entities by parsing csv
     animals = make_animals()
     drugs = make_drugs()
     ingredients = make_ingredients()
     combinations =  make_combinations()
 
+def show_entities():
     # Pretty print the results
     show_items(animals, "Animals:")
     show_items(drugs, "Drugs:")
     show_items(ingredients, "Ingredients:")
     show_items(combinations, "Combinations:")
 
+def split_entities_into_csv():
     # split the main csv into smaller files ready for imporation
     split_animals_into_csv(animals)
     split_drugs_into_csv(drugs)
     split_ingredients_into_csv(ingredients)
     split_combinations_into_csv(combinations)
+
 
 def show_items(storage, title):
     print(title)
