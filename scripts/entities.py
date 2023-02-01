@@ -89,7 +89,7 @@ class Combination:
         self.reference = ""
 
     def add_ingredient(self, ingredient):
-        self.ingredient.append(ingredient)
+        self.ingredients.append(ingredient)
 
     def show(self):
         juvenile = "juvenile" if self.for_juvenile else ""
