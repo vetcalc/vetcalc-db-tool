@@ -14,10 +14,17 @@ THIRD_DRUG_NAME_COL = SECOND_DRUG_NAME_COL + NUM_INGREDIENT_ATTR
 
 def main():
     entities = make_entities()
+    coalesce_entities(entities)
     make_references(entities)
     # show_entities(entities)
     write_all_into_csv(entities)
 
+
+def coalesce_entities(entities):
+    '''
+    denormalizes entities for sql tables
+    '''
+    entities["combinations"] = coalesce_combinations(entities["combinations"])
 
 def make_references(entities):
     '''
@@ -36,19 +43,19 @@ def make_entities():
     entities["drugs"] = make_drugs()
     entities["methods"] = make_methods()
     entities["ingredients"] = make_ingredients()
-    entities["combinations"] =  make_combinations(entities)
+    entities["combinations"] =  make_combinations()
     
     return entities
 
 
 def show_entities(entities):
     # Pretty print the results
-    show_items(entities["animals"], "Animals:")
-    show_items(entities["drugs"], "Drugs:")
-    show_items(entities["methods"], "Methods:")
-    show_items(entities["ingredients"], "Ingredients:")
-    show_items(entities["combinations"], "Combinations:")
-
+    # show_items(entities["animals"], "Animals:")
+    # show_items(entities["drugs"], "Drugs:")
+    # show_items(entities["methods"], "Methods:")
+    # show_items(entities["ingredients"], "Ingredients:")
+    # show_items(entities["combinations"], "Combinations:")
+    return
 
 def write_all_into_csv(entities):
     # convert the objects into rows in some csv files
@@ -205,7 +212,7 @@ def remove_whitespace(item):
         return item
 
 
-def make_combinations(entities):
+def make_combinations():
     combinations = []
 
     with open(CSV_FILENAME, newline='') as csv_file:
@@ -213,9 +220,10 @@ def make_combinations(entities):
         for idx, row in enumerate(reader):
             if idx == 0:
                 continue
-            _add_combination(combinations, row, entities)
+            _add_combination(combinations, row)
     
     sorted_combinations = sorted(combinations, key=attrgetter("animal", "for_juvenile"))
+    
     # add on the ids
     for idx, combination in enumerate(sorted_combinations):
         combination.id.set(idx+1)
@@ -223,7 +231,7 @@ def make_combinations(entities):
     return sorted_combinations
 
 
-def _add_combination(storage, row, entities):
+def _add_combination(storage, row):
 
     column = 0
     animal, column = _assign_value_and_advance_column(row, column) 
@@ -243,20 +251,26 @@ def _add_combination(storage, row, entities):
     combination.notes, column = _assign_value_and_advance_column(row, column)
     combination.reference, column = _assign_value_and_advance_column(row, column)
   
+    
+    actual_ingredients = []
     for ingredient in ingredients:
-        match = search_ingredient_by_info(ingredient, entities["ingredients"])
-        if match:
-            combination.add_ingredient(match.id.get())
+        if ingredient:
+            actual_ingredients.append(ent.Ingredient(ingredient))
+
+    combination.add_ingredients(actual_ingredients)
 
     storage.append(combination)
 
 
 def _parse_ingredients_from_combination_row(row, column):
     ingredients = []
+    
     ingredient, column = _assign_ingredient_and_advance_column(row, column)
     ingredients.append(ingredient)
+    
     ingredient, column = _assign_ingredient_and_advance_column(row, column)
     ingredients.append(ingredient)
+    
     ingredient, column = _assign_ingredient_and_advance_column(row, column)
     ingredients.append(ingredient)
 
@@ -273,7 +287,6 @@ def _assign_ingredient_and_advance_column(row,column):
     ingredient = _pull_ingredient(row, column)
     column += NUM_INGREDIENT_ATTR
     return (ingredient, column)
-
 
 
 def search_drugs_by_name(name, drugs):
@@ -303,17 +316,20 @@ def search_methods_by_name(name, methods):
             return method
     return ""
 
+
 def replace_animals_in_combinations_with_ids(entities):
     for combination in entities["combinations"]:
         animal = search_animals_by_name(combination.animal, entities["animals"])
         if animal:
             combination.animal = animal.id.get()
 
+
 def replace_methods_in_ingredients_with_ids(entities):
     for ingredient in entities["ingredients"]:
         method = search_methods_by_name(ingredient.method, entities["methods"])
         if method:
             ingredient.method = method.id.get()
+
 
 def replace_ingredient_attributes_with_ids(entities):
     '''
@@ -325,6 +341,72 @@ def replace_ingredient_attributes_with_ids(entities):
         if drug:
             ingredient.drug = drug.id.get()
 
+
+def coalesce_combinations(combinations):
+    '''
+    Look throug combination and combine similar combinations
+    by filtering into a second list
+    '''
+    denormalized = []
+
+    for combination in combinations:
+        add_to_denormalized(combination, denormalized)
+
+    return denormalized
+
+def add_to_denormalized(combination, denormalized):
+    match_idx = contains_combination(combination, denormalized)
+    if match_idx == -1:
+        denormalized.append(combination)
+    else:        
+        for ingredient_list in combination.ingredients:
+            denormalized[match_idx].ingredients.append(ingredient_list)
+
+
+def contains_combination(combination, a_list):
+    if not a_list:
+        return -1
+    
+    for idx, a_combo in enumerate(a_list):
+        if combinations_match(combination, a_combo):
+            return idx
+
+    return -1
+   
+
+def combinations_match(combo_1, combo_2):
+    if combo_1.animal != combo_2.animal:
+        return False
+    if combo_1.for_juvenile != combo_2.for_juvenile:
+        return False
+    if remove_whitespace(combo_1.combined_with) != remove_whitespace(combo_2.combined_with):
+        return False
+    if remove_whitespace(combo_1.purpose) != remove_whitespace(combo_2.purpose):
+        return False
+    if remove_whitespace(combo_1.notes) != remove_whitespace(combo_2.notes):
+        return False
+    if remove_whitespace(combo_1.reference) != remove_whitespace(combo_2.reference):
+        return False
+    if not ingredient_lists_match(combo_1.ingredients, combo_2.ingredients):
+        return False
+    return True
+
+
+def ingredient_lists_match(list_1, list_2):
+    # there must be the same number of ingredients
+    if len(list_1[0]) != len(list_2[0]):
+        return False
+
+    # and the names must match
+    names = set()
+    for ingredient in list_1[0]:
+        names.add(ingredient.drug)
+
+    for ingredient in list_2[0]:
+        if ingredient.drug not in names:
+            return False
+
+    return True
 
 if __name__ == "__main__":
     main()

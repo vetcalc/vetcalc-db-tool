@@ -50,7 +50,6 @@ class Ingredient:
     def __init__(self, info):
         self.id = eid("i", 0)
         self.combination = ""
-        self.drug = ""
         self.drug = info[0]
         self.concentration = info[1]
         self.concentration_unit = info[2] 
@@ -107,7 +106,7 @@ class Combination:
     Attributes:
 
     id
-    ingredients       -- as a list
+    ingredients       -- as a list of list of ingredients
     animal            -- a singular id
     for_juvenile      -- if the combination is for a juvenile animal
     combined_with     -- combintations containing a single drug can go with the specified drugs
@@ -125,12 +124,8 @@ class Combination:
         self.notes = ""
         self.reference = ""
 
-    def add_ingredient(self, ingredient_id):
-        '''
-            add the ingredient 
-        '''
-        if "i_" in ingredient_id and ingredient_id not in self.ingredients:
-            self.ingredients.append(ingredient_id)
+    def add_ingredients(self, ingredients):
+        self.ingredients.append(ingredients)
 
     def show(self):
         juvenile = "juvenile" if self.for_juvenile else ""
