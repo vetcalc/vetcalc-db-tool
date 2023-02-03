@@ -16,7 +16,7 @@ def main():
     entities = make_entities()
     make_references(entities)
     # show_entities(entities)
-    split_entities_into_csv(entities)
+    write_all_into_csv(entities)
 
 
 def make_references(entities):
@@ -25,6 +25,7 @@ def make_references(entities):
     '''
     replace_ingredient_attributes_with_ids(entities)
     replace_animals_in_combinations_with_ids(entities)
+    replace_methods_in_ingredients_with_ids(entities)
 
 
 def make_entities():
@@ -49,13 +50,35 @@ def show_entities(entities):
     show_items(entities["combinations"], "Combinations:")
 
 
-def split_entities_into_csv(entities):
-    # split the main csv into smaller files ready for imporation
-    split_animals_into_csv(entities["animals"])
-    split_drugs_into_csv(entities["drugs"])
-    split_methods_into_csv(entities["methods"])
-    split_ingredients_into_csv(entities["ingredients"])
-    split_combinations_into_csv(entities["combinations"])
+def write_all_into_csv(entities):
+    # convert the objects into rows in some csv files
+    write_objects_into_csv(entities["animals"],
+                            "id,name,temperature,heart_rate,respiratory_rate\n",
+                            f'{DATABASE_IMPORT_PREFIX}/animals.csv'
+                           )
+    write_objects_into_csv(entities["drugs"],
+                            "id,name\n",
+                            f'{DATABASE_IMPORT_PREFIX}/drugs.csv'
+                           )
+    write_objects_into_csv(entities["methods"],
+                            "id,name\n",
+                            f'{DATABASE_IMPORT_PREFIX}/methods.csv'
+                           )
+    write_objects_into_csv(entities["ingredients"],
+                            "id,drug,concentration,concentration_unit,dosage,dosage_unit,method\n",
+                            f'{DATABASE_IMPORT_PREFIX}/ingredients.csv'
+                           )
+    write_objects_into_csv(entities["combinations"], 
+                            "id,animal,for_juvenile,combined_with,purpose,notes,reference\n",
+                           f'{DATABASE_IMPORT_PREFIX}/combinations.csv'
+                           )
+
+
+def write_objects_into_csv(storage, header, filename):
+    with open(filename, 'w') as file:
+        file.write(header) 
+        for item in storage:
+            file.write(item.format())
 
 
 def show_items(storage, title):
@@ -252,64 +275,6 @@ def _assign_ingredient_and_advance_column(row,column):
     return (ingredient, column)
 
 
-def split_animals_into_csv(storage):
-    '''
-    Write the animals found into their own csv file with unique ids
-    '''
-    with open(f'{DATABASE_IMPORT_PREFIX}/animals.csv', 'w') as file:
-        header = "id,name,temperature,heart_rate,respiratory_rate\n"
-        file.write(header) 
-
-        for idx, animal in enumerate(storage):
-           file.write(animal.format())
-
-
-def split_drugs_into_csv(storage):
-    '''
-    Write the drugs found into their own csv file with unique ids
-    '''
-    with open(f'{DATABASE_IMPORT_PREFIX}/drugs.csv', 'w') as file:
-        header = "id,name\n"
-        file.write(header) 
-
-        for idx, drug in enumerate(storage):
-            file.write(drug.format())
-
-
-def split_methods_into_csv(storage):
-    '''
-    Write the methods found into their own csv file with unique ids
-    '''
-    with open(f'{DATABASE_IMPORT_PREFIX}/methods.csv', 'w') as file:
-        header = "id,name\n"
-        file.write(header) 
-
-        for idx, method in enumerate(storage):
-           file.write(method.format())
-
-
-def split_ingredients_into_csv(storage):
-    '''
-    Write the ingredients found into their own csv file with unique ids
-    '''
-    with open(f'{DATABASE_IMPORT_PREFIX}/ingredients.csv', 'w') as file:
-        header = "id,drug,concentration,concentration_unit,dosage,dosage_unit,method\n"
-        file.write(header) 
-
-        for idx, ingredient in enumerate(storage):
-            file.write(ingredient.format())
-
-
-def split_combinations_into_csv(storage):
-    '''
-    Write the ingredients found into their own csv file with unique ids
-    '''
-    with open(f'{DATABASE_IMPORT_PREFIX}/combinations.csv', 'w') as file:
-        header = "id,animal,for_juvenile,combined_with,purpose,notes,reference\n"
-        file.write(header) 
-
-        for idx, combination in enumerate(storage):
-            file.write(combination.format())
 
 def search_drugs_by_name(name, drugs):
     for drug in drugs:
@@ -332,12 +297,23 @@ def search_ingredient_by_info(info, ingredients):
     return ""
 
 
+def search_methods_by_name(name, methods): 
+    for method in methods:
+        if method.name == name:
+            return method
+    return ""
+
 def replace_animals_in_combinations_with_ids(entities):
     for combination in entities["combinations"]:
         animal = search_animals_by_name(combination.animal, entities["animals"])
         if animal:
             combination.animal = animal.id.get()
 
+def replace_methods_in_ingredients_with_ids(entities):
+    for ingredient in entities["ingredients"]:
+        method = search_methods_by_name(ingredient.method, entities["methods"])
+        if method:
+            ingredient.method = method.id.get()
 
 def replace_ingredient_attributes_with_ids(entities):
     '''
