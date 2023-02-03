@@ -21,6 +21,12 @@ class Drug:
                   f"\t{self.name}"
                  )
         print(visual)
+    
+    def format(self):
+        row = (f"{self.id.get()},"
+               f"{self.name}\n"
+              )
+        return row
 
 
 class Ingredient:
@@ -38,7 +44,7 @@ class Ingredient:
     concentation_unit       -- string
     dosage                  -- as a tuple representing a range
     dosage_unit             -- string
-    method                  -- how the ingredient is administered in the associated combinatino
+    method                  -- as a list of ids
     '''
 
     def __init__(self, info):
@@ -60,6 +66,18 @@ class Ingredient:
                   f"\t{self.method}"
                  )
         print(visual)
+
+    def format(self):
+        row = (f"{self.id.get()},"
+               f"{self.drug},"
+               f"{self.concentration},"
+               f"{self.concentration_unit},"
+               f"{self.dosage},"
+               f"{self.dosage_unit},"
+               f"{self.method},\n"
+              )
+
+        return row
 
     def matches(self, info):
         if not info:
@@ -90,7 +108,7 @@ class Combination:
 
     id
     ingredients       -- as a list
-    animal            -- singular
+    animal            -- a singular id
     for_juvenile      -- if the combination is for a juvenile animal
     combined_with     -- combintations containing a single drug can go with the specified drugs
     purpose           -- what this combination is used for
@@ -126,6 +144,16 @@ class Combination:
                  )
         print(visual)
 
+    def format(self):
+        row = (f"{self.id.get()},"
+               f"{self.animal},"
+               f"{self.for_juvenile},"
+               f"{self.purpose},"
+               f"{self.notes},"
+               f"{self.reference}\n"
+              )
+        return row
+ 
 
 class Animal:
     '''
@@ -158,6 +186,16 @@ class Animal:
                  )
         print(visual)
 
+    def format(self):
+        row = (f"{self.id.get()},"
+               f"{self.name},"
+               f"{self.temperature},"
+               f"{self.heart_rate},"
+               f"{self.respiratory_rate}\n"
+              )
+        return row
+ 
+
 class Method:
     '''
     Purpose:
@@ -173,8 +211,15 @@ class Method:
     def __init__(self, name):
         self.id = eid("m", 0)
         self.name = name
+
     def show(self):
         visual = (f"{self.id.get()} :\n"
                   f"\t{self.name}"
                  )
         print(visual)
+
+    def format(self):
+        row = (f"{self.id.get()},"
+               f"{self.name}\n"
+              )
+        return row

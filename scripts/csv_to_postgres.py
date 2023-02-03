@@ -11,11 +11,13 @@ FIRST_DRUG_NAME_COL = 3
 SECOND_DRUG_NAME_COL = FIRST_DRUG_NAME_COL + NUM_INGREDIENT_ATTR
 THIRD_DRUG_NAME_COL = SECOND_DRUG_NAME_COL + NUM_INGREDIENT_ATTR
 
+
 def main():
     entities = make_entities()
     make_references(entities)
     # show_entities(entities)
     split_entities_into_csv(entities)
+
 
 def make_references(entities):
     '''
@@ -23,6 +25,7 @@ def make_references(entities):
     '''
     replace_ingredient_attributes_with_ids(entities)
     replace_animals_in_combinations_with_ids(entities)
+
 
 def make_entities():
     entities = dict()
@@ -36,6 +39,7 @@ def make_entities():
     
     return entities
 
+
 def show_entities(entities):
     # Pretty print the results
     show_items(entities["animals"], "Animals:")
@@ -43,6 +47,7 @@ def show_entities(entities):
     show_items(entities["methods"], "Methods:")
     show_items(entities["ingredients"], "Ingredients:")
     show_items(entities["combinations"], "Combinations:")
+
 
 def split_entities_into_csv(entities):
     # split the main csv into smaller files ready for imporation
@@ -57,6 +62,7 @@ def show_items(storage, title):
     print(title)
     for item in storage:
         item.show()
+
 
 def make_animals():
     names = set()
@@ -77,6 +83,7 @@ def make_animals():
         animal.id.set(idx+1)
 
     return animals
+
 
 def make_drugs():
     names = set()
@@ -99,6 +106,7 @@ def make_drugs():
         drug.id.set(idx+1)
 
     return drugs
+
 
 def make_methods():
     names = set()
@@ -154,6 +162,7 @@ def _add_ingredient(storage, row, drug_name_col):
         if ingredient:
             storage.append(ent.Ingredient(ingredient))
 
+
 def _pull_ingredient(row, column):
     ingredient_info = []
     if row[column]:
@@ -163,6 +172,7 @@ def _pull_ingredient(row, column):
             ingredient_info.append(no_spacing)
     return ingredient_info
 
+
 def remove_whitespace(item):
     try:
         item = "".join(item.split())
@@ -170,6 +180,7 @@ def remove_whitespace(item):
         pass
     finally:
         return item
+
 
 def make_combinations(entities):
     combinations = []
@@ -188,6 +199,7 @@ def make_combinations(entities):
 
     return sorted_combinations
 
+
 def _add_combination(storage, row, entities):
 
     column = 0
@@ -201,7 +213,9 @@ def _add_combination(storage, row, entities):
     animal = remove_whitespace(animal)
     combination = ent.Combination(animal, for_juvenile)
     combination.combined_with, column = _assign_value_and_advance_column(row, column)
+    
     ingredients, column = _parse_ingredients_from_combination_row(row, column)
+    
     combination.purpose, column = _assign_value_and_advance_column(row, column)
     combination.notes, column = _assign_value_and_advance_column(row, column)
     combination.reference, column = _assign_value_and_advance_column(row, column)
@@ -212,6 +226,7 @@ def _add_combination(storage, row, entities):
             combination.add_ingredient(match.id.get())
 
     storage.append(combination)
+
 
 def _parse_ingredients_from_combination_row(row, column):
     ingredients = []
@@ -224,15 +239,18 @@ def _parse_ingredients_from_combination_row(row, column):
 
     return (ingredients, column)
 
+
 def _assign_value_and_advance_column(row, column):
     value = row[column]
     column += 1
     return (value, column)
 
+
 def _assign_ingredient_and_advance_column(row,column):
     ingredient = _pull_ingredient(row, column)
     column += NUM_INGREDIENT_ATTR
     return (ingredient, column)
+
 
 def split_animals_into_csv(storage):
     '''
@@ -243,13 +261,8 @@ def split_animals_into_csv(storage):
         file.write(header) 
 
         for idx, animal in enumerate(storage):
-            row = (f"{animal.id.get()},"
-                   f"{animal.name},"
-                   f"{animal.temperature},"
-                   f"{animal.heart_rate},"
-                   f"{animal.respiratory_rate}\n"
-                  )
-            file.write(row)
+           file.write(animal.format())
+
 
 def split_drugs_into_csv(storage):
     '''
@@ -260,10 +273,7 @@ def split_drugs_into_csv(storage):
         file.write(header) 
 
         for idx, drug in enumerate(storage):
-            row = (f"{drug.id.get()},"
-                   f"{drug.name}\n"
-                  )
-            file.write(row)
+            file.write(drug.format())
 
 
 def split_methods_into_csv(storage):
@@ -275,10 +285,7 @@ def split_methods_into_csv(storage):
         file.write(header) 
 
         for idx, method in enumerate(storage):
-            row = (f"{method.id.get()},"
-                   f"{method.name}\n"
-                  )
-            file.write(row)
+           file.write(method.format())
 
 
 def split_ingredients_into_csv(storage):
@@ -290,42 +297,19 @@ def split_ingredients_into_csv(storage):
         file.write(header) 
 
         for idx, ingredient in enumerate(storage):
-            row = (f"{ingredient.id.get()},"
-                   f"{ingredient.drug},"
-                   f"{ingredient.concentration},"
-                   f"{ingredient.concentration_unit},"
-                   f"{ingredient.dosage},"
-                   f"{ingredient.dosage_unit},"
-                   f"{ingredient.method},\n"
-                  )
-            file.write(row)
+            file.write(ingredient.format())
+
 
 def split_combinations_into_csv(storage):
     '''
     Write the ingredients found into their own csv file with unique ids
     '''
     with open(f'{DATABASE_IMPORT_PREFIX}/combinations.csv', 'w') as file:
-        header = "id,animal,for_juvenile,combined_with,drug1,drug2,drug3,purpose,notes,reference\n"
+        header = "id,animal,for_juvenile,combined_with,purpose,notes,reference\n"
         file.write(header) 
 
         for idx, combination in enumerate(storage):
-            file.write(format_one_combination_per_ingredient(combination))
-
-def format_one_combination_per_ingredient(combination):
-    formatted_combination = ""
-
-    for ingredient_id in combination.ingredients:
-        row = (f"{combination.id.get()},"
-               f"{combination.animal},"
-               f"{combination.for_juvenile},"
-               f"{ingredient_id},"
-               f"{combination.purpose},"
-               f"{combination.notes},"
-               f"{combination.reference}\n"
-              )
-        formatted_combination += row 
-
-    return formatted_combination
+            file.write(combination.format())
 
 def search_drugs_by_name(name, drugs):
     for drug in drugs:
@@ -333,11 +317,13 @@ def search_drugs_by_name(name, drugs):
             return drug
     return ""
 
+
 def search_animals_by_name(name, animals):
     for animal in animals:
         if animal.name == name:
             return animal
     return ""
+
 
 def search_ingredient_by_info(info, ingredients):
     for ingredient in ingredients:
@@ -345,11 +331,13 @@ def search_ingredient_by_info(info, ingredients):
             return ingredient
     return ""
 
+
 def replace_animals_in_combinations_with_ids(entities):
     for combination in entities["combinations"]:
         animal = search_animals_by_name(combination.animal, entities["animals"])
         if animal:
             combination.animal = animal.id.get()
+
 
 def replace_ingredient_attributes_with_ids(entities):
     '''
@@ -360,6 +348,7 @@ def replace_ingredient_attributes_with_ids(entities):
 
         if drug:
             ingredient.drug = drug.id.get()
+
 
 if __name__ == "__main__":
     main()
