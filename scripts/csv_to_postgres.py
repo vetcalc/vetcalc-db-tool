@@ -30,6 +30,7 @@ def make_entities():
     # Make entities by parsing csv
     entities["animals"] = make_animals()
     entities["drugs"] = make_drugs()
+    entities["methods"] = make_methods()
     entities["ingredients"] = make_ingredients()
     entities["combinations"] =  make_combinations(entities)
     
@@ -39,6 +40,7 @@ def show_entities(entities):
     # Pretty print the results
     show_items(entities["animals"], "Animals:")
     show_items(entities["drugs"], "Drugs:")
+    show_items(entities["mehods"], "Methods:")
     show_items(entities["ingredients"], "Ingredients:")
     show_items(entities["combinations"], "Combinations:")
 
@@ -46,6 +48,7 @@ def split_entities_into_csv(entities):
     # split the main csv into smaller files ready for imporation
     split_animals_into_csv(entities["animals"])
     split_drugs_into_csv(entities["drugs"])
+    split_methods_into_csv(entities["methods"])
     split_ingredients_into_csv(entities["ingredients"])
     split_combinations_into_csv(entities["combinations"])
 
@@ -84,9 +87,9 @@ def make_drugs():
         for idx, row in enumerate(reader):
             if idx == 0:
                 continue # ignore the header
-            _add_drug(names, row[FIRST_DRUG_NAME_COL])  
-            _add_drug(names, row[SECOND_DRUG_NAME_COL])  
-            _add_drug(names, row[THIRD_DRUG_NAME_COL])  
+            _add_to_set(names, row[FIRST_DRUG_NAME_COL])  
+            _add_to_set(names, row[SECOND_DRUG_NAME_COL])  
+            _add_to_set(names, row[THIRD_DRUG_NAME_COL])  
  
     for drug in sorted(names):
         drugs.append(ent.Drug(drug))
@@ -97,9 +100,33 @@ def make_drugs():
 
     return drugs
 
-def _add_drug(a_set, to_add):
+def make_methods():
+    names = set()
+    methods = []
+
+    with open(CSV_FILENAME, newline='') as csv_file:
+        reader = csv.reader(csv_file) 
+        for idx, row in enumerate(reader):
+            if idx == 0:
+                continue # ignore the header
+            _add_to_set(names, row[FIRST_DRUG_NAME_COL + 5])  
+            _add_to_set(names, row[SECOND_DRUG_NAME_COL + 5])  
+            _add_to_set(names, row[THIRD_DRUG_NAME_COL + 5])  
+ 
+    for method in sorted(names):
+        methods.append(ent.Method(method))
+
+    # add on the ids
+    for idx, method in enumerate(methods):
+        method.id.set(idx+1)
+
+    return methods
+
+
+def _add_to_set(a_set, to_add):
     if to_add:
         a_set.add(remove_whitespace(to_add))
+
 
 def make_ingredients():
     ingredients = []
@@ -237,6 +264,22 @@ def split_drugs_into_csv(storage):
                    f"{drug.name}\n"
                   )
             file.write(row)
+
+
+def split_methods_into_csv(storage):
+    '''
+    Write the methods found into their own csv file with unique ids
+    '''
+    with open(f'{DATABASE_IMPORT_PREFIX}/methods.csv', 'w') as file:
+        header = "id,name\n"
+        file.write(header) 
+
+        for idx, method in enumerate(storage):
+            row = (f"{method.id.get()},"
+                   f"{method.name}\n"
+                  )
+            file.write(row)
+
 
 def split_ingredients_into_csv(storage):
     '''

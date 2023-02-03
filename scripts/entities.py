@@ -32,7 +32,8 @@ class Ingredient:
     Attributes:
    
     id
-    drug                    -- singular
+    combination             -- as a singular id
+    drug                    -- as a singular id
     concentration           -- single number
     concentation_unit       -- string
     dosage                  -- as a tuple representing a range
@@ -42,6 +43,8 @@ class Ingredient:
 
     def __init__(self, info):
         self.id = eid("i", 0)
+        self.combination = ""
+        self.drug = ""
         self.drug = info[0]
         self.concentration = info[1]
         self.concentration_unit = info[2] 
@@ -152,5 +155,26 @@ class Animal:
                   f"\t{self.temperature} C \n"
                   f"\t{self.heart_rate} beats/min \n"
                   f"\t{self.respiratory_rate} breaths/min"
+                 )
+        print(visual)
+
+class Method:
+    '''
+    Purpose:
+
+    Contains the different ways ingredients can be administered
+
+    Attributes:
+
+    id
+    name        -- string
+
+    '''
+    def __init__(self, name):
+        self.id = eid("m", 0)
+        self.name = name
+    def show(self):
+        visual = (f"{self.id.get()} :\n"
+                  f"\t{self.name}"
                  )
         print(visual)
