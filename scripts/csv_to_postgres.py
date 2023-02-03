@@ -40,7 +40,7 @@ def show_entities(entities):
     # Pretty print the results
     show_items(entities["animals"], "Animals:")
     show_items(entities["drugs"], "Drugs:")
-    show_items(entities["mehods"], "Methods:")
+    show_items(entities["methods"], "Methods:")
     show_items(entities["ingredients"], "Ingredients:")
     show_items(entities["combinations"], "Combinations:")
 
