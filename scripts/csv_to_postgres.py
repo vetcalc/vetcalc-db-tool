@@ -22,7 +22,7 @@ def make_references(entities):
     Converts specific names in entities to reference ids in other entities
     '''
     replace_ingredient_attributes_with_ids(entities)
-    
+    replace_animals_in_combinations_with_ids(entities)
 
 def make_entities():
     entities = dict()
@@ -31,7 +31,7 @@ def make_entities():
     entities["animals"] = make_animals()
     entities["drugs"] = make_drugs()
     entities["ingredients"] = make_ingredients()
-    entities["combinations"] =  make_combinations()
+    entities["combinations"] =  make_combinations(entities)
     
     return entities
 
@@ -122,15 +122,19 @@ def make_ingredients():
 
 
 def _add_ingredient(storage, row, drug_name_col):
-    if row[drug_name_col]:
-        ingredient_info = []
+        ingredient = _pull_ingredient(row, drug_name_col) 
+        
+        if ingredient:
+            storage.append(ent.Ingredient(ingredient))
 
+def _pull_ingredient(row, column):
+    ingredient_info = []
+    if row[column]:
         for i in range(NUM_INGREDIENT_ATTR):
-            info = row[drug_name_col + i]
+            info = row[column + i]
             no_spacing = remove_whitespace(info)
             ingredient_info.append(no_spacing)
-       
-        storage.append(ent.Ingredient(ingredient_info))
+    return ingredient_info
 
 def remove_whitespace(item):
     try:
@@ -140,8 +144,68 @@ def remove_whitespace(item):
     finally:
         return item
 
-def make_combinations():
-    return []
+def make_combinations(entities):
+    combinations = []
+
+    with open(CSV_FILENAME, newline='') as csv_file:
+        reader = csv.reader(csv_file)
+        for idx, row in enumerate(reader):
+            if idx == 0:
+                continue
+            _add_combination(combinations, row, entities)
+    
+    sorted_combinations = sorted(combinations, key=attrgetter("animal", "for_juvenile"))
+    # add on the ids
+    for idx, combination in enumerate(sorted_combinations):
+        combination.id.set(idx+1)
+
+    return sorted_combinations
+
+def _add_combination(storage, row, entities):
+
+    column = 0
+    animal, column = _assign_value_and_advance_column(row, column) 
+    for_juvenile, column = _assign_value_and_advance_column(row, column)
+    if for_juvenile:
+        for_juvenile = True
+    else:
+        for_juvenile = False
+
+    animal = remove_whitespace(animal)
+    combination = ent.Combination(animal, for_juvenile)
+    combination.combined_with, column = _assign_value_and_advance_column(row, column)
+    ingredients, column = _parse_ingredients_from_combination_row(row, column)
+    combination.purpose, column = _assign_value_and_advance_column(row, column)
+    combination.notes, column = _assign_value_and_advance_column(row, column)
+    combination.reference, column = _assign_value_and_advance_column(row, column)
+  
+    for ingredient in ingredients:
+        match = search_ingredient_by_info(ingredient, entities["ingredients"])
+        if match:
+            combination.add_ingredient(match.id.get())
+
+    storage.append(combination)
+
+def _parse_ingredients_from_combination_row(row, column):
+    ingredients = []
+    ingredient, column = _assign_ingredient_and_advance_column(row, column)
+    ingredients.append(ingredient)
+    ingredient, column = _assign_ingredient_and_advance_column(row, column)
+    ingredients.append(ingredient)
+    ingredient, column = _assign_ingredient_and_advance_column(row, column)
+    ingredients.append(ingredient)
+
+    return (ingredients, column)
+
+def _assign_value_and_advance_column(row, column):
+    value = row[column]
+    column += 1
+    return (value, column)
+
+def _assign_ingredient_and_advance_column(row,column):
+    ingredient = _pull_ingredient(row, column)
+    column += NUM_INGREDIENT_ATTR
+    return (ingredient, column)
 
 def split_animals_into_csv(storage):
     '''
@@ -202,45 +266,57 @@ def split_combinations_into_csv(storage):
         file.write(header) 
 
         for idx, combination in enumerate(storage):
-            row = (f"{combination.id.get()}\n"
-                  )
-            file.write(row)
+            file.write(format_one_combination_per_ingredient(combination))
+
+def format_one_combination_per_ingredient(combination):
+    formatted_combination = ""
+
+    for ingredient_id in combination.ingredients:
+        row = (f"{combination.id.get()},"
+               f"{combination.animal},"
+               f"{combination.for_juvenile},"
+               f"{ingredient_id},"
+               f"{combination.purpose},"
+               f"{combination.notes},"
+               f"{combination.reference}\n"
+              )
+        formatted_combination += row 
+
+    return formatted_combination
 
 def search_drugs_by_name(name, drugs):
     for drug in drugs:
         if drug.name == name:
-            return drug.id
-    # no match
+            return drug
     return ""
+
+def search_animals_by_name(name, animals):
+    for animal in animals:
+        if animal.name == name:
+            return animal
+    return ""
+
+def search_ingredient_by_info(info, ingredients):
+    for ingredient in ingredients:
+        if ingredient.matches(info):
+            return ingredient
+    return ""
+
+def replace_animals_in_combinations_with_ids(entities):
+    for combination in entities["combinations"]:
+        animal = search_animals_by_name(combination.animal, entities["animals"])
+        if animal:
+            combination.animal = animal.id.get()
 
 def replace_ingredient_attributes_with_ids(entities):
     '''
     Replace drug names with their correpsonding ids from the Drug class
     '''
-    for idx, ingredient in enumerate(entities["ingredients"]):
-        drug_id = search_drugs_by_name(ingredient.drug, entities["drugs"])
+    for ingredient in entities["ingredients"]:
+        drug = search_drugs_by_name(ingredient.drug, entities["drugs"])
 
-        if drug_id:
-            ingredient.drug = drug_id.get()
-
-def replace_combination_attributes_with_ids(entities):
-    '''
-    Take the original csv, which has no concept of ids for each entity (execept combinations)
-    and replace the objects with their corresponsding ids from the various make_ commands.
-
-    This will reduce the number of colunmns as compared to the original csv
-    '''
-    pass    
-    # reduced_combinations = []
-
-    # with open(CSV_FILENAME, newline='') as csv_file:
-    #     reader = csv.reader(csv_file) 
-        # for idx, row in enumerate(reader):
-        #     if idx == 0:
-        #         continue # ignore the header
-            # replace
-
-
+        if drug:
+            ingredient.drug = drug.id.get()
 
 if __name__ == "__main__":
     main()

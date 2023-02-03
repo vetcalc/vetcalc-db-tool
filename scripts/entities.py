@@ -58,6 +58,22 @@ class Ingredient:
                  )
         print(visual)
 
+    def matches(self, info):
+        if not info:
+            return False
+        if info[0] != self.drug:
+            return False
+        if info[1] != self.concentration:
+            return False
+        if info[2] != self.concentration_unit:
+            return False
+        if info[3] != self.dosage:
+            return False
+        if info[4] != self.dosage_unit:
+            return False
+        if info[5] != self.method:
+            return False
+        return True
 
 class Combination:
     '''
@@ -88,8 +104,12 @@ class Combination:
         self.notes = ""
         self.reference = ""
 
-    def add_ingredient(self, ingredient):
-        self.ingredients.append(ingredient)
+    def add_ingredient(self, ingredient_id):
+        '''
+            add the ingredient 
+        '''
+        if "i_" in ingredient_id and ingredient_id not in self.ingredients:
+            self.ingredients.append(ingredient_id)
 
     def show(self):
         juvenile = "juvenile" if self.for_juvenile else ""
