@@ -15,8 +15,8 @@ THIRD_DRUG_NAME_COL = SECOND_DRUG_NAME_COL + NUM_INGREDIENT_ATTR
 def main():
     entities = make_entities()
     coalesce_entities(entities)
-    make_references(entities)
-    # show_entities(entities)
+    # make_references(entities)
+    show_entities(entities)
     write_all_into_csv(entities)
 
 
@@ -44,7 +44,7 @@ def make_entities():
     entities["methods"] = make_methods()
     entities["ingredients"] = make_ingredients()
     entities["combinations"] =  make_combinations()
-    
+      
     return entities
 
 
@@ -55,7 +55,19 @@ def show_entities(entities):
     # show_items(entities["methods"], "Methods:")
     # show_items(entities["ingredients"], "Ingredients:")
     # show_items(entities["combinations"], "Combinations:")
+    show_detailed_combinations(entities["combinations"])
+
     return
+
+
+def show_detailed_combinations(combinations):
+    for combo in combinations:
+        combo.show()
+        for idx, ingredient_list in enumerate(combo.ingredients):
+            print(f"List {idx}")
+            [ingredient.show() for ingredient in ingredient_list]
+    return 
+
 
 def write_all_into_csv(entities):
     # convert the objects into rows in some csv files
