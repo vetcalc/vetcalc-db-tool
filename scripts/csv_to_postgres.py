@@ -5,7 +5,7 @@ from operator import attrgetter
 CSV_FILENAME = "drugs.csv"
 DATABASE_IMPORT_PREFIX = "for_database_import"
 
-NUM_INGREDIENT_ATTR = 6 # not including id
+NUM_INGREDIENT_ATTR = 6 # relative to the original csv
 
 FIRST_DRUG_NAME_COL = 3
 SECOND_DRUG_NAME_COL = FIRST_DRUG_NAME_COL + NUM_INGREDIENT_ATTR
@@ -18,6 +18,7 @@ def main():
     make_references(entities)
     # show_entities(entities)
     write_all_into_csv(entities)
+    write_join_tables(entities)
 
 
 def dedup_entities(entities):
@@ -108,7 +109,7 @@ def write_all_into_csv(entities):
                             f'{DATABASE_IMPORT_PREFIX}/methods.csv'
                            )
     write_objects_into_csv(entities["ingredients"],
-                            "id,drug,concentration,concentration_unit,dosage,dosage_unit,method\n",
+                            "id,combination,drug,concentration,concentration_unit,dosage,dosage_unit\n",
                             f'{DATABASE_IMPORT_PREFIX}/ingredients.csv'
                            )
     write_objects_into_csv(entities["combinations"], 
@@ -123,6 +124,21 @@ def write_objects_into_csv(storage, header, filename):
         for item in storage:
             file.write(item.format())
 
+
+def write_join_tables(entities):
+    join_ingredients_methods(entities["ingredients"],
+                             "ingredient_id,method_id\n",
+                             f'{DATABASE_IMPORT_PREFIX}/ingredients_join_methods'
+                             )
+
+def join_ingredients_methods(storage, header, filename):
+    with open(filename, 'w') as file:
+        file.write(header) 
+
+        for ingredient in storage:
+            for method in ingredient.methods:
+                if method:
+                    file.write(f"{ingredient.id.get()},{method}\n")
 
 def show_items(storage, title):
     print(title)

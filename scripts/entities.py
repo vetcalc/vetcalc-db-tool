@@ -73,8 +73,7 @@ class Ingredient:
                f"{self.concentration},"
                f"{self.concentration_unit},"
                f"{self.dosage},"
-               f"{self.dosage_unit},"
-               f"{self.methods},\n"
+               f"{self.dosage_unit}\n"
               )
 
         return row
