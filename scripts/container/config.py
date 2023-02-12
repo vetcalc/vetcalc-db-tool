@@ -12,7 +12,6 @@ pod = {
 }
 
 db = {
-    'id_file': 'tmp/vaddb_container_id.txt',
     'name' : 'vaddb_pg',
     'port_map' : '33333:5432',
     'registry_image' : 'docker.io/library/postgres',
