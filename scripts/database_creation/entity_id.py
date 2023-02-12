@@ -18,3 +18,7 @@ class EntityId:
 
     def set(self, id):
         self.id = id
+
+def strip_prefix(id):
+    end_of_prefix = id.index("_")
+    return id[end_of_prefix+1:]
