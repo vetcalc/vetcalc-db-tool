@@ -1,6 +1,6 @@
 # Why
 
-Here are scripts for managing the Postges database using podman on
+Here are scripts for managing the Postgres database using podman on
 Fedora Linux.
 
 The scripts are written in Python to promote readability, though the same
