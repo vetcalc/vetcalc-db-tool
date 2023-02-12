@@ -1,5 +1,4 @@
 import csv
-from re import I
 import entities as ent
 from operator import attrgetter
 
@@ -17,7 +16,7 @@ def main():
     entities = make_entities()
     dedup_entities(entities)
     make_references(entities)
-    show_entities(entities)
+    # show_entities(entities)
     write_all_into_csv(entities)
 
 
@@ -67,7 +66,6 @@ def make_entities():
     entities["animals"] = make_animals()
     entities["drugs"] = make_drugs()
     entities["methods"] = make_methods()
-    # entities["ingredients"] = make_ingredients()
     entities["ingredients"] = [] # ingredients will be made later after dedup
     entities["combinations"] =  make_combinations()
       
@@ -81,7 +79,7 @@ def show_entities(entities):
     # show_items(entities["methods"], "Methods:")
     # show_items(entities["ingredients"], "Ingredients:")
     # show_items(entities["combinations"], "Combinations:")
-    show_detailed_combinations(entities["combinations"])
+    # show_detailed_combinations(entities["combinations"])
 
     return
 
@@ -202,26 +200,6 @@ def make_methods():
 def _add_to_set(a_set, to_add):
     if to_add:
         a_set.add(remove_whitespace(to_add))
-
-
-# def make_ingredients():
-#     ingredients = []
-
-#     with open(CSV_FILENAME, newline='') as csv_file:
-#         reader = csv.reader(csv_file) 
-#         for idx, row in enumerate(reader):
-#             if idx == 0:
-#                 continue # ignore the header
-#             _add_ingredient(ingredients, row, FIRST_DRUG_NAME_COL)  
-#             _add_ingredient(ingredients, row, SECOND_DRUG_NAME_COL)  
-#             _add_ingredient(ingredients, row, THIRD_DRUG_NAME_COL)  
-
-#     sorted_ingredients = sorted(ingredients, key=attrgetter("drug", "concentration", "dosage", "method"))
-#     # add on the ids
-#     for idx, ingredient in enumerate(sorted_ingredients):
-#         ingredient.id.set(idx+1)
-
-#     return sorted_ingredients
 
 
 def _add_ingredient(storage, row, drug_name_col):
