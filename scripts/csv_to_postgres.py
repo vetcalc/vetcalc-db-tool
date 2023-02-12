@@ -1,4 +1,5 @@
 import csv
+from re import I
 import entities as ent
 from operator import attrgetter
 
@@ -14,23 +15,47 @@ THIRD_DRUG_NAME_COL = SECOND_DRUG_NAME_COL + NUM_INGREDIENT_ATTR
 
 def main():
     entities = make_entities()
-    coalesce_entities(entities)
-    # make_references(entities)
+    dedup_entities(entities)
+    make_references(entities)
     show_entities(entities)
     write_all_into_csv(entities)
 
 
-def coalesce_entities(entities):
+def dedup_entities(entities):
     '''
     denormalizes entities for sql tables
     '''
-    entities["combinations"] = coalesce_combinations(entities["combinations"])
+    entities["combinations"] = dedup_combinations(entities["combinations"])
+    entities["ingredients"] = gather_ingredients(entities["combinations"])
+    entities["ingredients"] = dedup_ingredients(entities["ingredients"])
+
+def gather_ingredients(combinations):
+    ingredients = []
+
+    for combo in combinations:
+        for a_list in combo.ingredients:
+            for ingredient in a_list:
+                ingredient.combination = combo.id.get()
+                ingredients.append(ingredient)
+
+    # convert methods from a string to a set
+    for ingredient in ingredients:
+        method = ingredient.methods
+        ingredient.methods = list()
+        ingredient.methods.append(method)
+
+    # ids need setting
+    for idx, ingredient in enumerate(ingredients):
+        ingredient.id.set(idx+1)
+
+    return ingredients
+
 
 def make_references(entities):
     '''
     Converts specific names in entities to reference ids in other entities
     '''
-    replace_ingredient_attributes_with_ids(entities)
+    replace_drugs_in_ingredients_with_ids(entities)
     replace_animals_in_combinations_with_ids(entities)
     replace_methods_in_ingredients_with_ids(entities)
 
@@ -42,7 +67,8 @@ def make_entities():
     entities["animals"] = make_animals()
     entities["drugs"] = make_drugs()
     entities["methods"] = make_methods()
-    entities["ingredients"] = make_ingredients()
+    # entities["ingredients"] = make_ingredients()
+    entities["ingredients"] = [] # ingredients will be made later after dedup
     entities["combinations"] =  make_combinations()
       
     return entities
@@ -178,24 +204,24 @@ def _add_to_set(a_set, to_add):
         a_set.add(remove_whitespace(to_add))
 
 
-def make_ingredients():
-    ingredients = []
+# def make_ingredients():
+#     ingredients = []
 
-    with open(CSV_FILENAME, newline='') as csv_file:
-        reader = csv.reader(csv_file) 
-        for idx, row in enumerate(reader):
-            if idx == 0:
-                continue # ignore the header
-            _add_ingredient(ingredients, row, FIRST_DRUG_NAME_COL)  
-            _add_ingredient(ingredients, row, SECOND_DRUG_NAME_COL)  
-            _add_ingredient(ingredients, row, THIRD_DRUG_NAME_COL)  
+#     with open(CSV_FILENAME, newline='') as csv_file:
+#         reader = csv.reader(csv_file) 
+#         for idx, row in enumerate(reader):
+#             if idx == 0:
+#                 continue # ignore the header
+#             _add_ingredient(ingredients, row, FIRST_DRUG_NAME_COL)  
+#             _add_ingredient(ingredients, row, SECOND_DRUG_NAME_COL)  
+#             _add_ingredient(ingredients, row, THIRD_DRUG_NAME_COL)  
 
-    sorted_ingredients = sorted(ingredients, key=attrgetter("drug", "concentration", "dosage", "method"))
-    # add on the ids
-    for idx, ingredient in enumerate(sorted_ingredients):
-        ingredient.id.set(idx+1)
+#     sorted_ingredients = sorted(ingredients, key=attrgetter("drug", "concentration", "dosage", "method"))
+#     # add on the ids
+#     for idx, ingredient in enumerate(sorted_ingredients):
+#         ingredient.id.set(idx+1)
 
-    return sorted_ingredients
+#     return sorted_ingredients
 
 
 def _add_ingredient(storage, row, drug_name_col):
@@ -338,12 +364,13 @@ def replace_animals_in_combinations_with_ids(entities):
 
 def replace_methods_in_ingredients_with_ids(entities):
     for ingredient in entities["ingredients"]:
-        method = search_methods_by_name(ingredient.method, entities["methods"])
-        if method:
-            ingredient.method = method.id.get()
+        for idx, method in enumerate(ingredient.methods):
+            method = search_methods_by_name(method, entities["methods"])
+            if method:
+                ingredient.methods[idx] = method.id.get()
 
 
-def replace_ingredient_attributes_with_ids(entities):
+def replace_drugs_in_ingredients_with_ids(entities):
     '''
     Replace drug names with their correpsonding ids from the Drug class
     '''
@@ -354,25 +381,79 @@ def replace_ingredient_attributes_with_ids(entities):
             ingredient.drug = drug.id.get()
 
 
-def coalesce_combinations(combinations):
+def dedup_ingredients(ingredients):
     '''
-    Look throug combination and combine similar combinations
+    combine similar ingredients together 
+    '''
+    normalized = []
+
+    for ingredient in ingredients:
+        add_to_normalized_ingredients(ingredient, normalized)
+
+    for idx, ingredient in enumerate(normalized):
+        ingredient.id.set(idx+1)
+
+    return normalized
+
+
+def add_to_normalized_ingredients(ingredient, normalized):
+    match_idx = contains_ingredient(ingredient, normalized)
+    if match_idx == -1:
+        normalized.append(ingredient)
+    else:
+        for method in ingredient.methods:
+            normalized[match_idx].methods.append(method)
+
+
+def contains_ingredient(ingredient, a_list):
+    if not a_list:
+        return -1
+    
+    for idx, an_ingredient in enumerate(a_list):
+        if ingredients_match(ingredient, an_ingredient):
+            return idx
+
+    return -1
+
+
+def ingredients_match(first, second):
+    if first.combination != second.combination:
+        return False
+    if first.drug != second.drug:
+        return False
+    if remove_whitespace(first.concentration) != remove_whitespace(second.concentration):
+        return False
+    if remove_whitespace(first.concentration_unit) != remove_whitespace(second.concentration_unit):
+        return False
+    if remove_whitespace(first.dosage) != remove_whitespace(second.dosage):
+        return False
+    if remove_whitespace(first.dosage_unit) != remove_whitespace(second.dosage_unit):
+        return False
+    return True
+
+
+def dedup_combinations(combinations):
+    '''
+    Look through combinations and combine similar combinations
     by filtering into a second list
     '''
-    denormalized = []
+    normalized = []
 
     for combination in combinations:
-        add_to_denormalized(combination, denormalized)
+        add_to_normalized_combinations(combination, normalized)
 
-    return denormalized
+    for idx, combination in enumerate(normalized):
+        combination.id.set(idx+1)
 
-def add_to_denormalized(combination, denormalized):
-    match_idx = contains_combination(combination, denormalized)
+    return normalized
+
+def add_to_normalized_combinations(combination, normalized):
+    match_idx = contains_combination(combination, normalized)
     if match_idx == -1:
-        denormalized.append(combination)
+        normalized.append(combination)
     else:        
         for ingredient_list in combination.ingredients:
-            denormalized[match_idx].ingredients.append(ingredient_list)
+            normalized[match_idx].ingredients.append(ingredient_list)
 
 
 def contains_combination(combination, a_list):

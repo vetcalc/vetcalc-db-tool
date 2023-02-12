@@ -44,7 +44,7 @@ class Ingredient:
     concentation_unit       -- string
     dosage                  -- as a tuple representing a range
     dosage_unit             -- string
-    method                  -- as a list of ids
+    methods                  -- as a list of ids
     '''
 
     def __init__(self, info):
@@ -55,25 +55,26 @@ class Ingredient:
         self.concentration_unit = info[2] 
         self.dosage = info[3] 
         self.dosage_unit = info[4] 
-        self.method = info[5] 
+        self.methods = info[5] 
 
     def show(self):
         visual = (f"{self.id.get()} :\n"
                   f"\t{self.drug}\n"
                   f"\t{self.concentration} {self.concentration_unit}\n"
                   f"\t{self.dosage} {self.dosage_unit}\n"
-                  f"\t{self.method}"
+                  f"\t{self.methods}"
                  )
         print(visual)
 
     def format(self):
         row = (f"{self.id.get()},"
+               f"{self.combination},"
                f"{self.drug},"
                f"{self.concentration},"
                f"{self.concentration_unit},"
                f"{self.dosage},"
                f"{self.dosage_unit},"
-               f"{self.method},\n"
+               f"{self.methods},\n"
               )
 
         return row
@@ -91,7 +92,7 @@ class Ingredient:
             return False
         if info[4] != self.dosage_unit:
             return False
-        if info[5] != self.method:
+        if info[5] != self.methods:
             return False
         return True
 
