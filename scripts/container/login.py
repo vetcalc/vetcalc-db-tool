@@ -1,5 +1,5 @@
 import subprocess as sp
-import container_config as h
+import config as h
 
 db = h.db
 

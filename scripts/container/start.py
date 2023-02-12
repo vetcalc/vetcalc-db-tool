@@ -1,4 +1,4 @@
-import container_config as h
+import config as h
 
 pod = h.pod
 db = h.db
