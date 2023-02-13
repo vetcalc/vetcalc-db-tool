@@ -34,21 +34,24 @@ class Ingredient:
     Purpose:
 
     Contains the drug as used in a combination with contextual information
+    Note that the PK is made of (list, combination, drug). This the "address".
+    As in, what combination, what list in that combination, and what drug
+    in that list is the dosage and concentration information for?
     
     Attributes:
    
-    id
-    combination             -- as a singular id
-    drug                    -- as a singular id
+    list                    -- as a singular id (pk)
+    combination             -- as a singular id (pk)
+    drug                    -- as a singular id (pk)
     concentration           -- single number
     concentation_unit       -- string
     dosage                  -- as a tuple representing a range
     dosage_unit             -- string
-    methods                  -- as a list of ids
+    methods                 -- as a list of ids
     '''
 
     def __init__(self, info):
-        self.id = eid("i", 0)
+        self.list = eid("i", 0)
         self.combination = ""
         self.drug = info[0]
         self.concentration = info[1]
@@ -58,8 +61,8 @@ class Ingredient:
         self.methods = info[5] 
 
     def show(self):
-        visual = (f"{self.id.get()} :\n"
-                  f"\t{self.drug}\n"
+        visual = (f"{self.list.get()} :\n"
+                  f"\t{self.drug.id.get()}\n"
                   f"\t{self.concentration} {self.concentration_unit}\n"
                   f"\t{self.dosage} {self.dosage_unit}\n"
                   f"\t{self.methods}"
@@ -67,7 +70,7 @@ class Ingredient:
         print(visual)
 
     def format(self):
-        row = (f"{self.id.get()},"
+        row = (f"{self.list.get()},"
                f"{self.combination},"
                f"{self.drug},"
                f"{self.concentration},"

@@ -1,4 +1,5 @@
 import string_manipulation as sm
+from operator import attrgetter
 
 def dedup_entities(entities):
     '''
@@ -17,15 +18,11 @@ def _gather_ingredients(combinations):
                 ingredient.combination = combo.id.get()
                 ingredients.append(ingredient)
 
-    # convert methods from a string to a set
+    # convert methods from a string to a collection
     for ingredient in ingredients:
         method = ingredient.methods
-        ingredient.methods = list()
-        ingredient.methods.append(method)
-
-    # ids need setting
-    for idx, ingredient in enumerate(ingredients):
-        ingredient.id.set(idx+1)
+        ingredient.methods = set()
+        ingredient.methods.add(method)
 
     return ingredients
 
@@ -39,10 +36,9 @@ def _dedup_ingredients(ingredients):
     for ingredient in ingredients:
         _add_to_normalized_ingredients(ingredient, normalized)
 
-    for idx, ingredient in enumerate(normalized):
-        ingredient.id.set(idx+1)
+    sorted_items = sorted(normalized, key=attrgetter("combination", "drug"))
 
-    return normalized
+    return sorted_items
 
 
 def _add_to_normalized_ingredients(ingredient, normalized):
@@ -51,7 +47,7 @@ def _add_to_normalized_ingredients(ingredient, normalized):
         normalized.append(ingredient)
     else:
         for method in ingredient.methods:
-            normalized[match_idx].methods.append(method)
+            normalized[match_idx].methods.add(method)
 
 
 def _contains_ingredient(ingredient, a_list):

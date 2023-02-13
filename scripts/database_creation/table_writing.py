@@ -19,7 +19,7 @@ def _write_entities_into_csv(entities):
                             f'{DATABASE_IMPORT_PREFIX}/methods.csv'
                            )
     _write_objects_into_csv(entities["ingredients"],
-                            "id,combination,drug,concentration,concentration_unit,dosage,dosage_unit\n",
+                            "list,combination,drug,concentration,concentration_unit,dosage,dosage_unit\n",
                             f'{DATABASE_IMPORT_PREFIX}/ingredients.csv'
                            )
     _write_objects_into_csv(entities["combinations"], 
@@ -37,7 +37,7 @@ def _write_objects_into_csv(storage, header, filename):
 
 def _write_join_tables(entities):
     _join_ingredients_methods(entities["ingredients"],
-                             "ingredient_id,method_id\n",
+                             "list,combination,drug,method\n",
                              f'{DATABASE_IMPORT_PREFIX}/ingredients_join_methods.csv'
                              )
 
@@ -48,6 +48,8 @@ def _join_ingredients_methods(storage, header, filename):
         for ingredient in storage:
             for method in ingredient.methods:
                 if method:
-                    file.write(f"{ingredient.id.get()},{method}\n")
-
+                    file.write((f"{ingredient.list.get()},"
+                                f"{ingredient.combination},"
+                                f"{ingredient.drug},"
+                                f"{method}\n"))
 

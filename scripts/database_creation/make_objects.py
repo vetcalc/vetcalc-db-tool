@@ -100,13 +100,6 @@ def _add_to_set(a_set, to_add):
         a_set.add(no_whites)
 
 
-def _add_ingredient(storage, row, drug_name_col):
-        ingredient = _pull_ingredient(row, drug_name_col) 
-        
-        if ingredient:
-            storage.append(ent.Ingredient(ingredient))
-
-
 def _pull_ingredient(row, column):
     ingredient_info = []
     if row[column]:
@@ -120,13 +113,14 @@ def _pull_ingredient(row, column):
 
 def make_combinations():
     combinations = []
+    ingredient_list_counter = 0
 
     with open(INPUT_CSV, newline='') as csv_file:
         reader = csv.reader(csv_file)
         for idx, row in enumerate(reader):
             if idx == 0:
                 continue
-            _add_combination(combinations, row)
+            ingredient_list_counter = _add_combination(combinations, row, ingredient_list_counter)
     
     sorted_combinations = sorted(combinations, key=attrgetter("animal", "for_juvenile"))
     
@@ -137,7 +131,7 @@ def make_combinations():
     return sorted_combinations
 
 
-def _add_combination(storage, row):
+def _add_combination(storage, row, ingredient_list_counter):
 
     column = 0
     animal, column = _assign_value_and_advance_column(row, column) 
@@ -157,20 +151,24 @@ def _add_combination(storage, row):
     combination.notes, column = _assign_value_and_advance_column(row, column)
     combination.reference, column = _assign_value_and_advance_column(row, column)
 
-    # add quoation marks to escape , in csv file
+    # add quotation marks to escape , in csv file
     combination.purpose = f"\"{combination.purpose}\""
     combination.notes = f"\"{combination.notes}\""
     combination.reference = f"\"{combination.reference}\""
     
     actual_ingredients = []
+    ingredient_list_counter = ingredient_list_counter + 1
     for ingredient in ingredients:
         if ingredient:
-            actual_ingredients.append(ent.Ingredient(ingredient))
+            to_add = ent.Ingredient(ingredient)
+            to_add.list.set(ingredient_list_counter)
+            actual_ingredients.append(to_add)
+
 
     combination.add_ingredients(actual_ingredients)
-
     storage.append(combination)
 
+    return ingredient_list_counter
 
 def _parse_ingredients_from_combination_row(row, column):
     ingredients = []

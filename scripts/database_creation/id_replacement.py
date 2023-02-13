@@ -19,10 +19,11 @@ def _replace_animals_in_combinations_with_ids(entities):
 
 def _replace_methods_in_ingredients_with_ids(entities):
     for ingredient in entities["ingredients"]:
-        for idx, method in enumerate(ingredient.methods):
+        for method in ingredient.methods:
             method = sc.search_methods_by_name(method, entities["methods"])
             if method:
-                ingredient.methods[idx] = method.id.get()
+                ingredient.methods.remove(f"{method.name}")
+                ingredient.methods.add(method.id.get())
 
 
 def _replace_drugs_in_ingredients_with_ids(entities):
