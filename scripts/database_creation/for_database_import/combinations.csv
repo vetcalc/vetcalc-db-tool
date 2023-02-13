@@ -1,162 +1,162 @@
 id,animal,for_juvenile,combined_with,purpose,notes,reference
-c_1,a_1,False,,,
-c_2,a_1,False,Induction,Give to effect. Recovery is poor in unsedated camelids unless anesthesia is maintained with another drug. Use of sedatives or physical restraint during recovery is recommended.,
-c_3,a_1,False,,,Manual of Equine Anesthesia and Analgesia, Doherty et al, 2nd ed, pg 631
-c_4,a_1,False,,,
-c_5,a_1,False,,,
-c_6,a_1,False,,Causes recumbency,
-c_7,a_1,False,,,
-c_8,a_1,False,Induction,give simultaneously,
-c_9,a_1,False,,,
-c_10,a_1,False,,Give 1-2 times daily,
-c_11,a_1,False,,,
-c_12,a_1,False,,after dextrose,
-c_13,a_1,False,Induction,give fifteen minutes apart,
-c_14,a_1,False,Induction,give five minutes apart,
-c_15,a_1,False,Causes recumbency,,
-c_16,a_1,False,,high doses will cause recumbency,
-c_17,a_1,False,,,
-c_18,a_1,False,Induction,give simultaneously,
-c_19,a_1,False,,,
-c_20,a_1,False,,,
-c_21,a_1,False,Anesthesia maintenance,varies with premedication,
-c_22,a_1,False,Induction,higher dose if not sedated prior to induction,
-c_23,a_1,False,Induction,higher dose if not sedated prior to induction,
-c_24,a_1,False,Induction,higher dose if not sedated prior to induction,
-c_25,a_1,False,,High doses will cause recumbency,
-c_26,a_2,False,,,
-c_27,a_2,False,,,
-c_28,a_2,False,,Given with (preferred) or following midazolam and an opioid,
-c_29,a_2,False,,,
-c_30,a_2,False,,Give once daily, three day limit :: Brand name is Simbadol®,
-c_31,a_2,False,,,
-c_32,a_2,False,,,
-c_33,a_2,False,,,
-c_34,a_2,False,,,
-c_35,a_2,False,,,
-c_36,a_2,False,,,
-c_37,a_2,False,,Given following a sedative or tranquilizer and an opioid,
-c_38,a_2,False,,,
-c_39,a_2,False,,,
-c_40,a_2,False,,,
-c_41,a_2,False,,,
-c_42,a_2,False,,,
-c_43,a_2,False,,,
-c_44,a_2,False,,,
-c_45,a_2,False,,,
-c_46,a_2,False,,,
-c_47,a_3,False,Epidural,dilute with local anesthetic,
-c_48,a_3,False,Epidural,,
-c_49,a_3,False,Epidural,dilute with local anesthetic,
-c_50,a_4,False,,,
-c_51,a_4,False,,,
-c_52,a_4,False,,,
-c_53,a_4,False,,,
-c_54,a_4,False,,,
-c_55,a_4,False,,oral gel,
-c_56,a_4,False,,,
-c_57,a_4,False,,q 8 – 12 h,
-c_58,a_4,False,,q 4 – 6 h,
-c_59,a_4,False,,,
-c_60,a_4,False,,,
-c_61,a_4,False,,,
-c_62,a_4,False,,,
-c_63,a_4,False,,,
-c_64,a_4,False,,q 4 – 8 h,
-c_65,a_4,False,,,
-c_66,a_4,False,,,
-c_67,a_4,False,,,
-c_68,a_4,False,,,
-c_69,a_4,False,,,
-c_70,a_4,False,,,
-c_71,a_5,False,,,
-c_72,a_5,False,,,
-c_73,a_5,False,,(emergency dose, no dose listed in this book for bradycardia),Manual of Equine Anesthesia and Analgesia, Doherty et al, 2nd ed, pg 631
-c_74,a_5,False,,for sedation for standing procedures when combined with detomidine, may increase ataxia,
-c_75,a_5,False,,,
-c_76,a_5,False,,give with alpha-2 20 minutes prior to extubation,
-c_77,a_5,False,,,
-c_78,a_5,False,Epidural,dilute with local anesthetic,
-c_79,a_5,False,,,
-c_80,a_5,False,,Often causes excitement in adult horses if used alone. Can be used in neonatal foals.,
-c_81,a_5,False,,,
-c_82,a_5,False,,Give 1-2 times daily,
-c_83,a_5,False,,,
-c_84,a_5,False,Induction agent,Given separately, Guaifenesin then Ketamine
-c_85,a_5,False,,,
-c_86,a_5,False,,after dextrose,
-c_87,a_5,False,Induction agent,sufficient alpha-2 sedation must be obtained before induction,
-c_88,a_5,False,,,
-c_89,a_5,False,Induction agent,sufficient alpha-2 sedation must be obtained before induction,
-c_90,a_5,False,Induction agent,sufficient alpha-2 sedation must be obtained before induction,
-c_91,a_5,False,,Not used for sedation of adult horses. Effective for sedation of neonatal foals, especially if combined with an opioid.,
-c_92,a_5,False,,,
-c_93,a_5,False,,give with alpha-2 20 minutes prior to extubation,
-c_94,a_5,False,,at extubation,
-c_95,a_5,False,,,
-c_96,a_5,False,,,
-c_97,a_5,False,Induction agent. ,Sufficient alpha-2 sedation required prior to administration,
-c_98,a_5,False,,,
-c_99,a_5,False,Epidural,dilute with local anesthetic (2 ml maximum volume),
-c_100,a_5,False,Epidural,dilute with local anesthetic,
-c_101,a_5,False,,,
-c_102,a_6,False,,,
-c_103,a_6,False,,,Manual of Equine Anesthesia and Analgesia, Doherty et al, 2nd ed, pg 631
-c_104,a_6,False,,,
-c_105,a_6,False,,,
-c_106,a_6,False,,causes recumbency,
-c_107,a_6,False,,causes recumbency,
-c_108,a_6,False,,Causes recumbency,
-c_109,a_6,False,,will cause recumbency,
-c_110,a_6,False,,causes recumbency,
-c_111,a_6,False,,,
-c_112,a_6,False,Induction,give simultaneously,
-c_113,a_6,False,,,
-c_114,a_6,False,,Give 1-2 times daily,
-c_115,a_6,False,,,
-c_116,a_6,False,,after dextrose,
-c_117,a_6,False,Induction,Given separately Guaifenesin then Ketamine,
-c_118,a_6,False,Induction,give five minutes apart,
-c_119,a_6,False,Causes recumbency,,
-c_120,a_6,False,,high doses will cause recumbency,
-c_121,a_6,False,Analgesia CRI,,
-c_122,a_6,False,,,
-c_123,a_6,False,,,
-c_124,a_6,False,Induction,give simultaneously,
-c_125,a_6,False,,,
-c_126,a_6,False,,,
-c_127,a_6,False,,,
-c_128,a_6,False,Induction,,
-c_129,a_6,False,,high doses will cause recumbency,
-c_130,a_6,False,Induction,,
-c_131,a_6,False,Induction,,
-c_132,a_6,False,,high doses will cause recumbency, can cause pulmonary edema in sheep
-c_133,a_6,False,,causes recumbency,
-c_134,a_7,False,,(maximum 15 mg),
-c_135,a_7,False,,,
-c_136,a_7,False,,,
-c_137,a_7,False,Induction,give simultaneously,
-c_138,a_7,False,,,
-c_139,a_7,False,,,
-c_140,a_7,False,,,Manual of Equine Anesthesia and Analgesia, Doherty et al, 2nd ed, pg 577
-c_141,a_7,False,,,
-c_142,a_7,False,,Give 1-2 times daily,
-c_143,a_7,False,for endotoxemia,,
-c_144,a_7,False,,,
-c_145,a_7,False,,after dextrose,
-c_146,a_7,False,,after dextrose, 0.5 gm/kg (1 ml/kg of 50% dextrose),
-c_147,a_7,False,Induction,give simultaneously,
-c_148,a_7,False,Induction,give fifteen minutes apart,
-c_149,a_7,False,,intranasally, use of a device to aerosolize the medication is recommended,
-c_150,a_7,False,Induction,give simultaneously,
-c_151,a_7,False,,,
-c_152,a_7,False,,,
-c_153,a_7,False,Induction,give higher dose in the unsedated animal,
-c_154,a_7,False,Anesthesia maintenance,varies with premedication,
-c_155,a_7,False,Induction,give higher dose in the unsedated animal,
-c_156,a_7,False,Induction,give higher dose in unsedated animal,
-c_157,a_7,False,Induction,,
-c_158,a_7,False,,,
-c_159,a_7,False,,,Manual of Equine Anesthesia and Analgesia, Doherty et al, 2nd ed, pg 192
-c_160,a_7,False,,,
-c_161,a_7,True,Induction,,
+c_1,a_1,False,,"","",""
+c_2,a_1,False,,"Induction","Give to effect. Recovery is poor in unsedated camelids unless anesthesia is maintained with another drug. Use of sedatives or physical restraint during recovery is recommended.",""
+c_3,a_1,False,,"","","Manual of Equine Anesthesia and Analgesia, Doherty et al, 2nd ed, pg 631"
+c_4,a_1,False,,"","",""
+c_5,a_1,False,,"","",""
+c_6,a_1,False,,"","Causes recumbency",""
+c_7,a_1,False,,"","",""
+c_8,a_1,False,,"Induction","give simultaneously",""
+c_9,a_1,False,,"","",""
+c_10,a_1,False,,"","Give 1-2 times daily",""
+c_11,a_1,False,,"","",""
+c_12,a_1,False,,"","after dextrose",""
+c_13,a_1,False,,"Induction","give fifteen minutes apart",""
+c_14,a_1,False,,"Induction","give five minutes apart",""
+c_15,a_1,False,,"Causes recumbency","",""
+c_16,a_1,False,,"","high doses will cause recumbency",""
+c_17,a_1,False,,"","",""
+c_18,a_1,False,,"Induction","give simultaneously",""
+c_19,a_1,False,,"","",""
+c_20,a_1,False,,"","",""
+c_21,a_1,False,,"Anesthesia maintenance","varies with premedication",""
+c_22,a_1,False,,"Induction","higher dose if not sedated prior to induction",""
+c_23,a_1,False,,"Induction","higher dose if not sedated prior to induction",""
+c_24,a_1,False,,"Induction","higher dose if not sedated prior to induction",""
+c_25,a_1,False,,"","High doses will cause recumbency",""
+c_26,a_2,False,any,"","",""
+c_27,a_2,False,,"","",""
+c_28,a_2,False,any,"","Given with (preferred) or following midazolam and an opioid",""
+c_29,a_2,False,,"","",""
+c_30,a_2,False,,"","Give once daily, three day limit :: Brand name is Simbadol®",""
+c_31,a_2,False,,"","",""
+c_32,a_2,False,,"","",""
+c_33,a_2,False,any,"","",""
+c_34,a_2,False,,"","",""
+c_35,a_2,False,,"","",""
+c_36,a_2,False,,"","",""
+c_37,a_2,False,any,"","Given following a sedative or tranquilizer and an opioid",""
+c_38,a_2,False,,"","",""
+c_39,a_2,False,,"","",""
+c_40,a_2,False,any,"","",""
+c_41,a_2,False,,"","",""
+c_42,a_2,False,,"","",""
+c_43,a_2,False,,"","",""
+c_44,a_2,False,,"","",""
+c_45,a_2,False,,"","",""
+c_46,a_2,False,,"","",""
+c_47,a_3,False,,"Epidural","dilute with local anesthetic",""
+c_48,a_3,False,,"Epidural","",""
+c_49,a_3,False,,"Epidural","dilute with local anesthetic",""
+c_50,a_4,False,,"","",""
+c_51,a_4,False,any,"","",""
+c_52,a_4,False,,"","",""
+c_53,a_4,False,,"","",""
+c_54,a_4,False,,"","",""
+c_55,a_4,False,,"","oral gel",""
+c_56,a_4,False,any,"","",""
+c_57,a_4,False,,"","q 8 – 12 h",""
+c_58,a_4,False,,"","q 4 – 6 h",""
+c_59,a_4,False,any,"","",""
+c_60,a_4,False,,"","",""
+c_61,a_4,False,,"","",""
+c_62,a_4,False,any,"","",""
+c_63,a_4,False,,"","",""
+c_64,a_4,False,,"","q 4 – 8 h",""
+c_65,a_4,False,,"","",""
+c_66,a_4,False,,"","",""
+c_67,a_4,False,,"","",""
+c_68,a_4,False,,"","",""
+c_69,a_4,False,,"","",""
+c_70,a_4,False,,"","",""
+c_71,a_5,False,,"","",""
+c_72,a_5,False,any,"","",""
+c_73,a_5,False,,"","(emergency dose, no dose listed in this book for bradycardia)","Manual of Equine Anesthesia and Analgesia, Doherty et al, 2nd ed, pg 631"
+c_74,a_5,False,,"","for sedation for standing procedures when combined with detomidine, may increase ataxia",""
+c_75,a_5,False,,"","",""
+c_76,a_5,False,,"","give with alpha-2 20 minutes prior to extubation",""
+c_77,a_5,False,any,"","",""
+c_78,a_5,False,,"Epidural","dilute with local anesthetic",""
+c_79,a_5,False,any,"","",""
+c_80,a_5,False,,"","Often causes excitement in adult horses if used alone. Can be used in neonatal foals.",""
+c_81,a_5,False,,"","",""
+c_82,a_5,False,,"","Give 1-2 times daily",""
+c_83,a_5,False,,"","",""
+c_84,a_5,False,,"Induction agent","Given separately"," Guaifenesin then Ketamine"
+c_85,a_5,False,,"","",""
+c_86,a_5,False,,"","after dextrose",""
+c_87,a_5,False,,"Induction agent","sufficient alpha-2 sedation must be obtained before induction",""
+c_88,a_5,False,,"","",""
+c_89,a_5,False,,"Induction agent","sufficient alpha-2 sedation must be obtained before induction",""
+c_90,a_5,False,,"Induction agent","sufficient alpha-2 sedation must be obtained before induction",""
+c_91,a_5,False,,"","Not used for sedation of adult horses. Effective for sedation of neonatal foals, especially if combined with an opioid.",""
+c_92,a_5,False,,"","",""
+c_93,a_5,False,,"","give with alpha-2 20 minutes prior to extubation",""
+c_94,a_5,False,,"","at extubation",""
+c_95,a_5,False,,"","",""
+c_96,a_5,False,any,"","",""
+c_97,a_5,False,,"Induction agent. ","Sufficient alpha-2 sedation required prior to administration",""
+c_98,a_5,False,,"","",""
+c_99,a_5,False,,"Epidural","dilute with local anesthetic (2 ml maximum volume)",""
+c_100,a_5,False,,"Epidural","dilute with local anesthetic",""
+c_101,a_5,False,any,"","",""
+c_102,a_6,False,,"","",""
+c_103,a_6,False,,"","","Manual of Equine Anesthesia and Analgesia, Doherty et al, 2nd ed, pg 631"
+c_104,a_6,False,,"","",""
+c_105,a_6,False,,"","",""
+c_106,a_6,False,Xylazine,"","causes recumbency",""
+c_107,a_6,False,Detomidine,"","causes recumbency",""
+c_108,a_6,False,,"","Causes recumbency",""
+c_109,a_6,False,,"","will cause recumbency",""
+c_110,a_6,False,Butorphanol,"","causes recumbency",""
+c_111,a_6,False,,"","",""
+c_112,a_6,False,,"Induction","give simultaneously",""
+c_113,a_6,False,,"","",""
+c_114,a_6,False,,"","Give 1-2 times daily",""
+c_115,a_6,False,,"","",""
+c_116,a_6,False,,"","after dextrose",""
+c_117,a_6,False,,"Induction","Given separately Guaifenesin then Ketamine",""
+c_118,a_6,False,,"Induction","give five minutes apart",""
+c_119,a_6,False,,"Causes recumbency","",""
+c_120,a_6,False,,"","high doses will cause recumbency",""
+c_121,a_6,False,,"Analgesia CRI","",""
+c_122,a_6,False,,"","",""
+c_123,a_6,False,,"","",""
+c_124,a_6,False,,"Induction","give simultaneously",""
+c_125,a_6,False,,"","",""
+c_126,a_6,False,,"","",""
+c_127,a_6,False,,"","",""
+c_128,a_6,False,,"Induction","",""
+c_129,a_6,False,,"","high doses will cause recumbency",""
+c_130,a_6,False,,"Induction","",""
+c_131,a_6,False,,"Induction","",""
+c_132,a_6,False,,"","high doses will cause recumbency"," can cause pulmonary edema in sheep"
+c_133,a_6,False,Butorphanol,"","causes recumbency",""
+c_134,a_7,False,,"","(maximum 15 mg)",""
+c_135,a_7,False,,"","",""
+c_136,a_7,False,,"","",""
+c_137,a_7,False,,"Induction","give simultaneously",""
+c_138,a_7,False,,"","",""
+c_139,a_7,False,,"","",""
+c_140,a_7,False,,"","","Manual of Equine Anesthesia and Analgesia, Doherty et al, 2nd ed, pg 577"
+c_141,a_7,False,,"","",""
+c_142,a_7,False,,"","Give 1-2 times daily",""
+c_143,a_7,False,,"for endotoxemia","",""
+c_144,a_7,False,,"","",""
+c_145,a_7,False,,"","after dextrose",""
+c_146,a_7,False,,"","after dextrose, 0.5 gm/kg (1 ml/kg of 50% dextrose)",""
+c_147,a_7,False,,"Induction","give simultaneously",""
+c_148,a_7,False,,"Induction","give fifteen minutes apart",""
+c_149,a_7,False,,"","intranasally, use of a device to aerosolize the medication is recommended",""
+c_150,a_7,False,,"Induction","give simultaneously",""
+c_151,a_7,False,,"","",""
+c_152,a_7,False,,"","",""
+c_153,a_7,False,,"Induction","give higher dose in the unsedated animal",""
+c_154,a_7,False,,"Anesthesia maintenance","varies with premedication",""
+c_155,a_7,False,,"Induction","give higher dose in the unsedated animal",""
+c_156,a_7,False,,"Induction","give higher dose in unsedated animal",""
+c_157,a_7,False,,"Induction","",""
+c_158,a_7,False,,"","",""
+c_159,a_7,False,,"","","Manual of Equine Anesthesia and Analgesia, Doherty et al, 2nd ed, pg 192"
+c_160,a_7,False,,"","",""
+c_161,a_7,True,,"Induction","",""

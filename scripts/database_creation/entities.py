@@ -143,6 +143,7 @@ class Combination:
         row = (f"{self.id.get()},"
                f"{self.animal},"
                f"{self.for_juvenile},"
+               f"{self.combined_with},"
                f"{self.purpose},"
                f"{self.notes},"
                f"{self.reference}\n"

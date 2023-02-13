@@ -8,7 +8,6 @@ NOTE:
 
     see https://www.psycopg.org/docs/usage.html#passing-parameters-to-sql-queries
     for more information
-
 '''
 
 class AnimalSql:
@@ -33,6 +32,7 @@ class AnimalSql:
                 "VALUES (%s, %s, %s, %s, %s);")).format(s.Identifier(self.table_name)),
                 (sp(values[0]), values[1], values[2], values[3], values[4])
                 )
+
 
 class DrugSql:
 
@@ -87,15 +87,20 @@ class CombinationSql:
     def create_table(self):
         return (s.SQL(("CREATE TABLE IF NOT EXISTS {}("
            "e_id bigint PRIMARY KEY, "
-           "animal bigint NOT NULL"
-           ");")
-            ).format(s.Identifier(self.table_name)), None)
+           "animal bigint REFERENCES animals,"
+           "for_juvenile bool NOT NULL,"
+           "combined_with varchar,"
+           "purpose varchar,"
+           "notes varchar,"
+           "reference varchar"
+           ");")).format(s.Identifier(self.table_name)), None)
            
  
     def insert_row(self, values):
         return (s.SQL(("INSERT INTO {}" 
-                "(e_id, name) "
-                "VALUES (%s, %s);")).format(s.Identifier(self.table_name)),
-                (sp(values[0]), values[1])
+                "(e_id, animal, for_juvenile, combined_with, purpose, notes, reference) "
+                "VALUES (%s, %s, %s, %s, %s, %s, %s);")).format(s.Identifier(self.table_name)),
+                (sp(values[0]), sp(values[1]), values[2], values[3], 
+                 values[4], values[5], values[6])
                 )
 

@@ -95,7 +95,9 @@ def make_methods():
 
 def _add_to_set(a_set, to_add):
     if to_add:
-        a_set.add(sm.remove_whitespace(to_add))
+        escaped = sm.escape_characters(to_add)
+        no_whites = sm.remove_whitespace(escaped)
+        a_set.add(no_whites)
 
 
 def _add_ingredient(storage, row, drug_name_col):
@@ -110,7 +112,8 @@ def _pull_ingredient(row, column):
     if row[column]:
         for i in range(NUM_INGREDIENT_ATTR):
             info = row[column + i]
-            no_spacing = sm.remove_whitespace(info)
+            escaped = sm.escape_characters(info)
+            no_spacing = sm.remove_whitespace(escaped)
             ingredient_info.append(no_spacing)
     return ingredient_info
 
@@ -153,7 +156,11 @@ def _add_combination(storage, row):
     combination.purpose, column = _assign_value_and_advance_column(row, column)
     combination.notes, column = _assign_value_and_advance_column(row, column)
     combination.reference, column = _assign_value_and_advance_column(row, column)
-  
+
+    # add quoation marks to escape , in csv file
+    combination.purpose = f"\"{combination.purpose}\""
+    combination.notes = f"\"{combination.notes}\""
+    combination.reference = f"\"{combination.reference}\""
     
     actual_ingredients = []
     for ingredient in ingredients:
@@ -181,7 +188,7 @@ def _parse_ingredients_from_combination_row(row, column):
 
 
 def _assign_value_and_advance_column(row, column):
-    value = row[column]
+    value = sm.escape_characters(row[column])
     column += 1
     return (value, column)
 
