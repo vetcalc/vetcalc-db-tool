@@ -10,6 +10,15 @@ class EntityId:
         self.id = id
         self.prefix = prefix
 
+
+    def __gt__(self, other):
+        return self.get() > other.get()
+
+
+    def __eq__(self, other):
+        return self.get() == other.get()
+
+
     def show(self):
         print (f"{self.prefix}_{self.id}")
 
