@@ -1,4 +1,3 @@
-from entity_id import strip_prefix as sp
 from psycopg2 import sql as s
 
 '''
@@ -30,7 +29,7 @@ class AnimalSql:
         return (s.SQL(("INSERT INTO {}" 
                 "(e_id, name, temperature, heart_rate, respiratory_rate) "
                 "VALUES (%s, %s, %s, %s, %s);")).format(s.Identifier(self.table_name)),
-                (sp(values[0]), values[1], values[2], values[3], values[4])
+                (values[0].get(True), values[1], values[2], values[3], values[4])
                 )
 
 
@@ -52,7 +51,7 @@ class DrugSql:
         return (s.SQL(("INSERT INTO {}" 
                 "(e_id, name) "
                 "VALUES (%s, %s);")).format(s.Identifier(self.table_name)),
-                (sp(values[0]), values[1])
+                (values[0].get(True), values[1])
                 )
 
 
@@ -74,7 +73,7 @@ class MethodSql:
         return (s.SQL(("INSERT INTO {}" 
                 "(e_id, name) "
                 "VALUES (%s, %s);")).format(s.Identifier(self.table_name)),
-                (sp(values[0]), values[1])
+                (values[0].get(True), values[1])
                 )
 
 
@@ -100,7 +99,7 @@ class CombinationSql:
         return (s.SQL(("INSERT INTO {}" 
                 "(e_id, animal, for_juvenile, combined_with, purpose, notes, reference) "
                 "VALUES (%s, %s, %s, %s, %s, %s, %s);")).format(s.Identifier(self.table_name)),
-                (sp(values[0]), sp(values[1]), values[2], values[3], 
+                (values[0].get(True), values[1].get(True), values[2], values[3], 
                  values[4], values[5], values[6])
                 )
 
