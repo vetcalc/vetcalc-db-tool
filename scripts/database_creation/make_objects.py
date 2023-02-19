@@ -1,199 +1,122 @@
 import csv
-from operator import attrgetter
-
 
 import entities as ent
-import string_manipulation as sm
 
 INPUT_CSV = "drugs.csv"
-
-NUM_INGREDIENT_ATTR = 6 # relative to the original csv
-
-FIRST_DRUG_NAME_COL = 3
-SECOND_DRUG_NAME_COL = FIRST_DRUG_NAME_COL + NUM_INGREDIENT_ATTR
-THIRD_DRUG_NAME_COL = SECOND_DRUG_NAME_COL + NUM_INGREDIENT_ATTR
 
 def make_entities():
     entities = dict()
 
     # Make entities by parsing csv
-    entities["animals"] = make_animals()
-    entities["drugs"] = make_drugs()
-    entities["methods"] = make_methods()
-    entities["ingredients"] = [] # ingredients will be made later after dedup
-    entities["combinations"] =  make_combinations()
+    entities["animals"] = make_objects_simple(ent.Animal, 1)
+    entities["drugs"] = make_objects_simple(ent.Drug, 2)
+    entities["methods"] = make_objects_with_delimiter(ent.Method, 3, ':')
+    entities["dosages"] =  make_dosages(ent.Dosage, entities, ":")
       
     return entities
 
 
-def make_animals():
+def make_objects_simple(object_maker, column_to_parse):
     names = set()
-    animals = []
+    objects = []
 
     with open(INPUT_CSV, newline='') as csv_file:
         reader = csv.reader(csv_file) 
         for idx, row in enumerate(reader):
             if idx == 0:
                 continue # ignore the header
-            names.add(row[0])
+            names.add(row[column_to_parse])
 
     for name in sorted(names):
-        animals.append(ent.Animal(sm.remove_whitespace(name)))
+        objects.append(object_maker(name))
 
-    # add on the ids
-    for idx, animal in enumerate(animals):
-        animal.id.set(idx+1)
+    objects = set_all_ids_consecutively(objects)
 
-    return animals
+    return objects
 
 
-def make_drugs():
+def make_objects_with_delimiter(object_maker, column_to_parse, delimiter=None):
     names = set()
-    drugs = []
+    objects = []
 
     with open(INPUT_CSV, newline='') as csv_file:
         reader = csv.reader(csv_file) 
         for idx, row in enumerate(reader):
             if idx == 0:
                 continue # ignore the header
-            _add_to_set(names, row[FIRST_DRUG_NAME_COL])  
-            _add_to_set(names, row[SECOND_DRUG_NAME_COL])  
-            _add_to_set(names, row[THIRD_DRUG_NAME_COL])  
- 
-    for drug in sorted(names):
-        drugs.append(ent.Drug(drug))
+
+            names_present = row[column_to_parse].split(delimiter)
+            [names.add(x) for x in names_present]
+
+    for name in sorted(names):
+        if name:
+            objects.append(object_maker(name))
 
     # add on the ids
-    for idx, drug in enumerate(drugs):
-        drug.id.set(idx+1)
+    objects = set_all_ids_consecutively(objects)
 
-    return drugs
-
-
-def make_methods():
-    names = set()
-    methods = []
-
-    with open(INPUT_CSV, newline='') as csv_file:
-        reader = csv.reader(csv_file) 
-        for idx, row in enumerate(reader):
-            if idx == 0:
-                continue # ignore the header
-            _add_to_set(names, row[FIRST_DRUG_NAME_COL + 5])  
-            _add_to_set(names, row[SECOND_DRUG_NAME_COL + 5])  
-            _add_to_set(names, row[THIRD_DRUG_NAME_COL + 5])  
- 
-    for method in sorted(names):
-        methods.append(ent.Method(method))
-
-    # add on the ids
-    for idx, method in enumerate(methods):
-        method.id.set(idx+1)
-
-    return methods
+    return objects 
 
 
-def _add_to_set(a_set, to_add):
-    if to_add:
-        escaped = sm.escape_characters(to_add)
-        no_whites = sm.remove_whitespace(escaped)
-        a_set.add(no_whites)
-
-
-def _pull_ingredient(row, column):
-    ingredient_info = []
-    if row[column]:
-        for i in range(NUM_INGREDIENT_ATTR):
-            info = row[column + i]
-            escaped = sm.escape_characters(info)
-            no_spacing = sm.remove_whitespace(escaped)
-            ingredient_info.append(no_spacing)
-    return ingredient_info
-
-
-def make_combinations():
-    combinations = []
-    ingredient_list_counter = 0
+def make_dosages(object_maker, entities, delimiter):
+    dosages = []
 
     with open(INPUT_CSV, newline='') as csv_file:
         reader = csv.reader(csv_file)
         for idx, row in enumerate(reader):
             if idx == 0:
                 continue
-            ingredient_list_counter = _add_combination(combinations, row, ingredient_list_counter)
+            
+            dosage = None
+            animal = search_objects_by_name(row[1], entities["animals"], "name")
+            drug = search_objects_by_name(row[2], entities["drugs"], "name")
+            if animal and drug:
+                dosage = object_maker(animal.id, drug.id)
+            
+            methods = row[3].split(delimiter)
+            for item in methods:
+                method = search_objects_by_name(item, entities["methods"], "name")
+                if method and dosage:
+                    dosage.methods.add(method.id)
+          
+            concentration_number = force_as_none(row[4])
+            concentration_unit = force_as_none(row[5])
+            concentration = (concentration_number, concentration_unit)
+
+            dose_low = force_as_none(row[6])
+            dose_high = force_as_none(row[7])
+            dose_unit = force_as_none(row[8])
+            dose = (dose_low, dose_high, dose_unit)
+
+            notes = force_as_none(row[9])
+           
+            if dosage:
+                dosage.concentration = concentration
+                dosage.dose = dose
+                dosage.notes = notes
+
+            dosages.append(dosage)
     
-    sorted_combinations = sorted(combinations, key=attrgetter("animal", "for_juvenile"))
-    
-    # add on the ids
-    for idx, combination in enumerate(sorted_combinations):
-        combination.id.set(idx+1)
+    dosages = set_all_ids_consecutively(dosages)
 
-    return sorted_combinations
+    return dosages
 
 
-def _add_combination(storage, row, ingredient_list_counter):
-
-    column = 0
-    animal, column = _assign_value_and_advance_column(row, column) 
-    for_juvenile, column = _assign_value_and_advance_column(row, column)
-    if for_juvenile:
-        for_juvenile = True
-    else:
-        for_juvenile = False
-
-    animal = sm.remove_whitespace(animal)
-    combination = ent.Combination(animal, for_juvenile)
-    combination.combined_with, column = _assign_value_and_advance_column(row, column)
-    
-    ingredients, column = _parse_ingredients_from_combination_row(row, column)
-    
-    combination.purpose, column = _assign_value_and_advance_column(row, column)
-    combination.notes, column = _assign_value_and_advance_column(row, column)
-    combination.reference, column = _assign_value_and_advance_column(row, column)
-
-    # add quotation marks to escape , in csv file
-    combination.purpose = f"\"{combination.purpose}\""
-    combination.notes = f"\"{combination.notes}\""
-    combination.reference = f"\"{combination.reference}\""
-    
-    actual_ingredients = []
-    ingredient_list_counter = ingredient_list_counter + 1
-    for ingredient in ingredients:
-        if ingredient:
-            to_add = ent.Ingredient(ingredient)
-            to_add.list.set(ingredient_list_counter)
-            actual_ingredients.append(to_add)
+def force_as_none(thing_to_force):
+    if thing_to_force:
+        return thing_to_force
+    return None
 
 
-    combination.add_ingredients(actual_ingredients)
-    storage.append(combination)
-
-    return ingredient_list_counter
-
-def _parse_ingredients_from_combination_row(row, column):
-    ingredients = []
-    
-    ingredient, column = _assign_ingredient_and_advance_column(row, column)
-    ingredients.append(ingredient)
-    
-    ingredient, column = _assign_ingredient_and_advance_column(row, column)
-    ingredients.append(ingredient)
-    
-    ingredient, column = _assign_ingredient_and_advance_column(row, column)
-    ingredients.append(ingredient)
-
-    return (ingredients, column)
+def set_all_ids_consecutively(objects):
+    for idx, object in enumerate(objects):
+        object.id.set(idx+1)
+    return objects
 
 
-def _assign_value_and_advance_column(row, column):
-    value = sm.escape_characters(row[column])
-    column += 1
-    return (value, column)
-
-
-def _assign_ingredient_and_advance_column(row,column):
-    ingredient = _pull_ingredient(row, column)
-    column += NUM_INGREDIENT_ATTR
-    return (ingredient, column)
-
+def search_objects_by_name(criterion, objects, attribute):
+    for object in objects:
+        if getattr(object, attribute) == criterion:
+            return object
+    return None
 
