@@ -1,6 +1,5 @@
 # local modules
 import table_writing as tw
-import deduplication as ddp
 import make_objects as mo
 import id_replacement as ri
 
