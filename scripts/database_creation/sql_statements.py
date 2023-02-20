@@ -16,9 +16,9 @@ class AnimalSql:
 
 
     def create_table(self):
-        return (s.SQL(("DROP TABLE IF EXISTS{tbl};"
+        return (s.SQL(("DROP TABLE IF EXISTS {tbl} CASCADE;"
            "CREATE TABLE {tbl}("
-           "animal_id serial PRIMARY KEY, "
+           "animal_id bigserial PRIMARY KEY, "
            "name text NOT NULL, "
            "temperature_low real NOT NULL, "
            "temperature_high real NOT NULL, "
@@ -31,9 +31,9 @@ class AnimalSql:
  
     def insert_row(self, values):
         return (s.SQL(("INSERT INTO {tbl}" 
-                "(animal_id, name, temperature_low, temperature_high, heart_rate_low, heart_rate_high, respiratory_rate_low, respiratory_rate_high) "
-                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s);")).format(tbl=s.Identifier(self.table_name)),
-                (strip(values[0]), values[1], values[2], values[3], values[4], values[5], values[6], values[7])
+                "(name, temperature_low, temperature_high, heart_rate_low, heart_rate_high, respiratory_rate_low, respiratory_rate_high) "
+                "VALUES (%s, %s, %s, %s, %s, %s, %s);")).format(tbl=s.Identifier(self.table_name)),
+                (values[1], values[2], values[3], values[4], values[5], values[6], values[7])
                 )
 
 
@@ -44,9 +44,9 @@ class DrugSql:
 
 
     def create_table(self):
-        return (s.SQL(("DROP TABLE IF EXISTS {tbl};"
+        return (s.SQL(("DROP TABLE IF EXISTS {tbl} CASCADE;"
             "CREATE TABLE {tbl}("
-            "drug_id serial PRIMARY KEY, "
+            "drug_id bigserial PRIMARY KEY, "
             "name text NOT NULL"
             ");")).format(tbl=s.Identifier(self.table_name)), None)
            
@@ -66,9 +66,9 @@ class MethodSql:
 
 
     def create_table(self):
-        return (s.SQL(("DROP TABLE IF EXISTS {tbl};"
+        return (s.SQL(("DROP TABLE IF EXISTS {tbl} CASCADE;"
             "CREATE TABLE {tbl}("
-            "method_id serial PRIMARY KEY, "
+            "method_id bigserial PRIMARY KEY, "
             "name text NOT NULL"
             ");")).format(tbl=s.Identifier(self.table_name)), None)
            
@@ -88,9 +88,9 @@ class UnitSql:
 
 
     def create_table(self):
-        return (s.SQL(("DROP TABLE IF EXISTS {tbl};"
+        return (s.SQL(("DROP TABLE IF EXISTS {tbl} CASCADE;"
             "CREATE TABLE {tbl}("
-            "unit_id serial PRIMARY KEY, "
+            "unit_id bigserial PRIMARY KEY, "
             "name text NOT NULL"
             ");")).format(tbl=s.Identifier(self.table_name)), None)
            
@@ -110,29 +110,23 @@ class ConcentrationSql:
 
 
     def create_table(self):
-        return (s.SQL(("DROP TABLE IF EXISTS {tbl};"
+        return (s.SQL(("DROP TABLE IF EXISTS {tbl} CASCADE;"
             "CREATE TABLE {tbl}("
-            "concentration_id serial PRIMARY KEY, "
+            "concentration_id bigserial PRIMARY KEY, "
             "value real, "
-            "unit_id int REFERENCES units, "
-            "dosage_id int REFERENCES dosages"
+            "unit_id bigint REFERENCES units, "
+            "dosage_id bigint REFERENCES dosages"
             ");")).format(tbl=s.Identifier(self.table_name)), None)
            
  
     def insert_row(self, values):
-        if values[1] == "None":
-            value = None
-        else:
-            value = values[1]
+        value = None if values[1] == "None" else values[1]
 
         return (s.SQL(("INSERT INTO {tbl}" 
-                "(concentration_id, name, unit_id, dosage_id) "
+                "(concentration_id, value, unit_id, dosage_id) "
                 "VALUES (%s, %s, %s, %s);")).format(tbl=s.Identifier(self.table_name)),
                 (strip(values[0]), value, strip(values[2]), strip(values[3]),)
                 )
-
-
-
 
 
 class DosageSql:
@@ -142,24 +136,26 @@ class DosageSql:
 
 
     def create_table(self):
-        return (s.SQL(("DROP TABLE IF EXISTS {tbl};"
-            "CREATE TABLE IF NOT EXISTS {tbl}("
-            "dosage_id serial PRIMARY KEY, "
-            "animal_id int REFERENCES animals, "
-            "drug_id int REFERENCES drugs, "
+        return (s.SQL(("DROP TABLE IF EXISTS {tbl} CASCADE;"
+            "CREATE TABLE {tbl}("
+            "dosage_id bigserial PRIMARY KEY, "
+            "animal_id bigint REFERENCES animals, "
+            "drug_id bigint REFERENCES drugs, "
             "dose_low real NOT NULL, "
             "dose_high real NOT NULL, "
-            "dose_unit_id REFERENCES units, "
+            "dose_unit_id bigint REFERENCES units, "
             "notes text"
             ");")).format(tbl=s.Identifier(self.table_name)), None)
            
  
     def insert_row(self, values):
+        notes = None if values[6] == "None" else values[6]
+
         return (s.SQL(("INSERT INTO {tbl}" 
-                "(e_id, animal, for_juvenile, combined_with, purpose, notes, reference) "
+                "(dosage_id, animal_id, drug_id, dose_low, dose_high, dose_unit_id, notes) "
                 "VALUES (%s, %s, %s, %s, %s, %s, %s);")).format(tbl=s.Identifier(self.table_name)),
                 (strip(values[0]), strip(values[1]), strip(values[2]), values[3], 
-                 values[4], strip(values[5]), values[6])
+                 values[4], strip(values[5]), notes)
                 )
 
 
@@ -170,10 +166,10 @@ class DosagesJoinMethodsSql:
 
 
     def create_table(self):
-        return (s.SQL(("DROP TABLE IF EXISTS {tbl};"
+        return (s.SQL(("DROP TABLE IF EXISTS {tbl} CASCADE;"
             "CREATE TABLE {tbl}("
-            "dosage_id int REFERENCES dosages, "
-            "method_id int REFERENCES methods "
+            "dosage_id bigint REFERENCES dosages, "
+            "method_id bigint REFERENCES methods "
             ");")).format(tbl=s.Identifier(self.table_name)), None)
            
  
