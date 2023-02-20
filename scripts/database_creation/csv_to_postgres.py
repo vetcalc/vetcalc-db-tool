@@ -21,7 +21,6 @@ def main():
     write_table_to_database(f"{TABLE_FOLDER}/dosages.csv", ss.DosageSql().insert_row)
     write_table_to_database(f"{TABLE_FOLDER}/concentrations.csv", ss.ConcentrationSql().insert_row)
     write_table_to_database(f"{TABLE_FOLDER}/dosages_join_methods.csv", ss.DosagesJoinMethodsSql().insert_row)
-    
 
     return
 

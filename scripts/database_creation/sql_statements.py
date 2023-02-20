@@ -31,9 +31,9 @@ class AnimalSql:
  
     def insert_row(self, values):
         return (s.SQL(("INSERT INTO {tbl}" 
-                "(name, temperature_low, temperature_high, heart_rate_low, heart_rate_high, respiratory_rate_low, respiratory_rate_high) "
-                "VALUES (%s, %s, %s, %s, %s, %s, %s);")).format(tbl=s.Identifier(self.table_name)),
-                (values[1], values[2], values[3], values[4], values[5], values[6], values[7])
+                "(animal_id, name, temperature_low, temperature_high, heart_rate_low, heart_rate_high, respiratory_rate_low, respiratory_rate_high) "
+                "VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, %s);")).format(tbl=s.Identifier(self.table_name)),
+                ([values[1], values[2], values[3], values[4], values[5], values[6], values[7]])
                 )
 
 
@@ -54,8 +54,8 @@ class DrugSql:
     def insert_row(self, values):
         return (s.SQL(("INSERT INTO {tbl}" 
                 "(drug_id, name) "
-                "VALUES (%s, %s);")).format(tbl=s.Identifier(self.table_name)),
-                (strip(values[0]), values[1])
+                "VALUES (DEFAULT, %s);")).format(tbl=s.Identifier(self.table_name)),
+                ([values[1]])
                 )
 
 
@@ -76,8 +76,8 @@ class MethodSql:
     def insert_row(self, values):
         return (s.SQL(("INSERT INTO {tbl}" 
                 "(method_id, name) "
-                "VALUES (%s, %s);")).format(tbl=s.Identifier(self.table_name)),
-                (strip(values[0]), values[1])
+                "VALUES (DEFAULT, %s);")).format(tbl=s.Identifier(self.table_name)),
+                ([values[1]])
                 )
 
 
@@ -98,8 +98,8 @@ class UnitSql:
     def insert_row(self, values):
         return (s.SQL(("INSERT INTO {tbl}" 
                 "(unit_id, name) "
-                "VALUES (%s, %s);")).format(tbl=s.Identifier(self.table_name)),
-                (strip(values[0]), values[1])
+                "VALUES (DEFAULT, %s);")).format(tbl=s.Identifier(self.table_name)),
+                ([values[1]])
                 )
 
 
@@ -124,8 +124,8 @@ class ConcentrationSql:
 
         return (s.SQL(("INSERT INTO {tbl}" 
                 "(concentration_id, value, unit_id, dosage_id) "
-                "VALUES (%s, %s, %s, %s);")).format(tbl=s.Identifier(self.table_name)),
-                (strip(values[0]), value, strip(values[2]), strip(values[3]),)
+                "VALUES (DEFAULT, %s, %s, %s);")).format(tbl=s.Identifier(self.table_name)),
+                ([value, strip(values[2]), strip(values[3])])
                 )
 
 
@@ -153,9 +153,8 @@ class DosageSql:
 
         return (s.SQL(("INSERT INTO {tbl}" 
                 "(dosage_id, animal_id, drug_id, dose_low, dose_high, dose_unit_id, notes) "
-                "VALUES (%s, %s, %s, %s, %s, %s, %s);")).format(tbl=s.Identifier(self.table_name)),
-                (strip(values[0]), strip(values[1]), strip(values[2]), values[3], 
-                 values[4], strip(values[5]), notes)
+                "VALUES (DEFAULT, %s, %s, %s, %s, %s, %s);")).format(tbl=s.Identifier(self.table_name)),
+                ([strip(values[1]), strip(values[2]), values[3], values[4], strip(values[5]), notes])
                 )
 
 
