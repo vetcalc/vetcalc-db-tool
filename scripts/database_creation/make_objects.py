@@ -137,7 +137,7 @@ def make_concentrations_from_entities(entities):
         value_string, unit_string = dosage.concentration
         
         unit = search_objects_by_criterion(unit_string, entities["units"], "name")
-        if not unit:
+        if unit is None:
             dosage.concentration = None
             continue
 
