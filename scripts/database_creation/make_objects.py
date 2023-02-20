@@ -23,9 +23,6 @@ def make_units(object_maker):
     dose_units = make_objects_simple(object_maker, 8)
 
     units = concentration_units + dose_units
-    for unit in units:
-        if unit.name == "":
-            units.remove(unit)
     units = set_all_ids_consecutively(units)
 
     return units
@@ -99,8 +96,8 @@ def make_dosages(object_maker, entities, delimiter):
             concentration_unit = force_as_none(row[5])
             concentration = (concentration_number, concentration_unit)
 
-            dose_low = force_as_none(row[6])
-            dose_high = force_as_none(row[7])
+            dose_low = row[6]
+            dose_high = row[7]
             dose = (dose_low, dose_high)
             
             dose_unit = force_as_none(row[8])

@@ -1,7 +1,7 @@
 e_id,animal,drug,method,concentration,concentration_unit,dose_low,dose_high,dose_unit,notes
 1,Equine,Acepromazine,IV:IM,10,mg/ml,0.020,0.080,mg/kg,
 2,Equine,Detomidine,IV:IM,10,mg/ml,0.005,0.020,mg/kg,
-3,Equine,Detomidine,Sublingual,10,mg/ml,,0.040,mg/kg,
+3,Equine,Detomidine,Sublingual,10,mg/ml,0.040,0.040,mg/kg,
 4,Equine,Romifidine,IV,10,mg/ml,0.025,0.120,mg/kg,
 5,Equine,Romifidine,IM,10,mg/ml,0.160,0.350,mg/kg,
 6,Equine,Xylazine,IV:IM,100,mg/ml,0.200,1.0,mg/kg,dilute with local anesthetic
@@ -10,24 +10,24 @@ e_id,animal,drug,method,concentration,concentration_unit,dose_low,dose_high,dose
 9,Equine,Midazolam,IV:IM,5,mg/ml,0.050,0.100,mg/kg,"Not used for sedation of adult horses. Effective for sedation of neonatal foals, especially if combined with an opioid."
 10,Equine,Butorphanol,IV:IM,10,mg/ml,0.010,0.030,mg/kg,
 11,Equine,Hydromorphone,IV:IM,20,mg/ml,0.020,0.040,mg/kg,
-12,Equine,Meperidine,IV:IM,,,1,2,mg/kg,IV admin may cause histamine release and hypotension
+12,Equine,Meperidine,IV:IM,,n/a,1,2,mg/kg,IV admin may cause histamine release and hypotension
 13,Equine,Morphine,IV:IM,50,mg/ml,0.100,0.200,mg/kg,Give slowly to avoid risk of histamine release
-14,Equine,Ketamine,IV,100,mg/ml,,2.2,mg/kg,Induction agent. Sufficient alpha-2 sedation must be obtained before induction. Can be given as a CRI for pain at 1-2 mg/kg/hr.
+14,Equine,Ketamine,IV,100,mg/ml,2.2,2.2,mg/kg,Induction agent. Sufficient alpha-2 sedation must be obtained before induction. Can be given as a CRI for pain at 1-2 mg/kg/hr.
 15,Equine,Guaifenesin,IV,,varies,50,100,mg/kg,Induction agent to be given with Ketamine.
 16,Equine,Tiletamine-Zolazepam,IV,100,mg/ml,1,2,mg/kg,Induction agent. Sufficient alpha-2 sedation required prior to administration
-17,Equine,Hypertonic Saline (7.2%),,,,2,5,ml/kg,"should not be administered more rapidly than 1ml/kg/min, do not repeat dose"
+17,Equine,Hypertonic Saline (7.2%),,,n/a,2,5,ml/kg,"should not be administered more rapidly than 1ml/kg/min, do not repeat dose"
 18,Equine,Atropine,IV,,varies,0.020,0.040,mg/kg,Emergency dose
 19,Equine,Butorphanol,IV:IM,10,mg/ml,0.020,0.050,mg/kg,
 20,Equine,Butorphanol,SQ,10,mg/ml,0.020,0.050,mg/kg,
-21,Equine,Dextrose (50%),IV,,,0.25,0.5,ml/kg,
+21,Equine,Dextrose (50%),IV,,n/a,0.25,0.5,ml/kg,
 22,Equine,Ephedrine,IV,50,mg/ml,0.020,0.1,mg/kg,
 23,Equine,Epinephrine,IV,1,mg/ml,0.006,0.01,mg/kg,
 24,Equine,Flunixin,IV,50,mg/ml,0.5,1.1,mg/kg,Give 1-2 times daily
 25,Equine,Glycopyrrolate,IV,0.2,mg/ml,0.005,0.01,mg/kg,
-26,Equine,Insulin,IV,10,U/ml,,0.1,U/kg,Give after dextrose
+26,Equine,Insulin,IV,10,U/ml,0.1,0.1,U/kg,Give after dextrose
 27,Equine,Lidocaine,IV,20,mg/ml,1.3,3,mg/kg,"slow IV bolus. anti - arrhythmia, Analgesia CRI follows bolus: 25-100 µg/kg/min IV. As an epidural: 1ml/15-50kg"
-28,Equine,Morphine,IV:IM:SQ:Epidural,15,mg/ml,,0.1,mg/kg,Analgesia. Histamine release with IV admin.
-29,Equine,Nalbuphine,IV,20,mg/ml,,0.06,mg/kg,
+28,Equine,Morphine,IV:IM:SQ:Epidural,15,mg/ml,0.1,0.1,mg/kg,Analgesia. Histamine release with IV admin.
+29,Equine,Nalbuphine,IV,20,mg/ml,0.06,0.06,mg/kg,
 30,Equine,Phenylephrine,,10,mg/ml,0.002,0.004,mg/kg,dilute to 1 mg/ml for infusion
 31,Sheep Goats,Acepromazine,IV:IM,10,mg/ml,0.02,0.06,mg/kg,
 32,Sheep Goats,Detomidine,IV:IM,10,mg/ml,0.002,0.030,mg/kg,30 µg/kg IV will cause recumbency
@@ -40,24 +40,24 @@ e_id,animal,drug,method,concentration,concentration_unit,dose_low,dose_high,dose
 39,Sheep Goats,Butorphanol,IV,10,mg/ml,0.05,0.2,mg/kg,
 40,Sheep Goats,Meperidine,IV:IM,50:100,mg/ml,2,5,mg/kg,
 41,Sheep Goats,Morphine,IM,50,mg/ml,0.05,0.25,mg/kg,
-42,Sheep Goats,Pentobarbital,IV,60,mg/ml,,1,mg/kg,
+42,Sheep Goats,Pentobarbital,IV,60,mg/ml,1,1,mg/kg,
 43,Sheep Goats,Propofol,IV,10,mg/ml,2,8,mg/kg,Induction
 44,Sheep Goats,Guaifenesin,IV,50,mg/ml,50,100,mg/kg,Induction; Give prior to ketamine for induction
 45,Sheep Goats,Thiopental,IV,,varies,4,10,mg/kg,Induction
 46,Sheep Goats,Tiletamine-Zolazepam,IV,100,mg/ml,1,2,mg/kg,Induction
-47,Sheep Goats,Hypertonic Saline (7.2%),,,,2,5,ml/kg,"over 5-10min, should not be administered more rapidly than 1ml/kg/min, do not repeat dose"
-48,Sheep Goats,Atropine,IV,0.5:15,mg/ml,,0.06,mg/kg,Bradycardia
+47,Sheep Goats,Hypertonic Saline (7.2%),,,n/a,2,5,ml/kg,"over 5-10min, should not be administered more rapidly than 1ml/kg/min, do not repeat dose"
+48,Sheep Goats,Atropine,IV,0.5:15,mg/ml,0.06,0.06,mg/kg,Bradycardia
 49,Sheep Goats,Butorphanol,IV:IM:SQ,10,mg/ml,0.02,0.05,mg/kg,
-50,Sheep Goats,Dextrose (50%),,,,0.25,0.5,ml/kg,
+50,Sheep Goats,Dextrose (50%),,,n/a,0.25,0.5,ml/kg,
 51,Sheep Goats,Ephedrine,IV,50,mg/ml,0.02,0.1,mg/kg,
 52,Sheep Goats,Epinephrine,IV,1,mg/ml,0.006,0.01,mg/kg,
 53,Sheep Goats,Fentanyl,IV,50,mg/ml,0.002,0.005,mg/kg,as a bolus followed by 0.1 – 0.5 µg/kg/min IV
 54,Sheep Goats,Flunixin,IV,50,mg/ml,0.5,1.1,mg/kg,Give 1-2 times daily
 55,Sheep Goats,Glycopyrrolate,IV,0.2,mg/ml,0.005,0.010,mg/kg,
-56,Sheep Goats,Insulin,IV,10,U/ml,,0.1,U/kg,Give after dextrose
+56,Sheep Goats,Insulin,IV,10,U/ml,0.1,0.1,U/kg,Give after dextrose
 57,Sheep Goats,Lidocaine,IV,20,mg/ml,1.3,3,mg/kg,anti - arrhythmia and analgesia. Give bolus slow IV followed by 25-100 µg/kg/min IV
-58,Sheep Goats,Morphine,IV:IM:SQ:Epidural,15,mg/ml,,0.1,mg/kg,Analgesia. Histamine release with IV admin
-59,Sheep Goats,Nalbuphine,IV,20,mg/ml,,0.06,mg/kg,
+58,Sheep Goats,Morphine,IV:IM:SQ:Epidural,15,mg/ml,0.1,0.1,mg/kg,Analgesia. Histamine release with IV admin
+59,Sheep Goats,Nalbuphine,IV,20,mg/ml,0.06,0.06,mg/kg,
 60,Sheep Goats,Atipamezole,IV,5,mg/ml,0.02,0.05,mg/kg,
 61,Camelid,Acepromazine,IV:IM:SQ,10,mg/ml,0.033,0.15,mg/kg,
 62,Camelid,Medetomidine,IV,1,mg/ml,0.003,0.01,mg/kg,Give low dose IV. High doses will cause recumbency.
@@ -67,27 +67,27 @@ e_id,animal,drug,method,concentration,concentration_unit,dose_low,dose_high,dose
 66,Camelid,Midazolam,IV:IM,5,mg/ml,0.05,0.3,mg/kg,
 67,Camelid,Butorphanol,IV:IM:SQ,10,mg/ml,0.05,0.2,mg/kg,
 68,Camelid,Nalbuphine,IV:IM,10:20,mg/ml,0.2,0.4,mg/kg,
-69,Camelid,Buprenorphine,IV,0.3,mg/ml,,0.002,mg/kg,
-70,Camelid,Buprenorphine,IM,0.3,mg/ml,,0.01,mg/kg,
+69,Camelid,Buprenorphine,IV,0.3,mg/ml,0.002,0.002,mg/kg,
+70,Camelid,Buprenorphine,IM,0.3,mg/ml,0.01,0.01,mg/kg,
 71,Camelid,Morphine,IV:IM,15,mg/ml,0.05,0.1,mg/kg,
 72,Camelid,Tiletamine-Zolazepam,IM,100,mg/ml,2,4,mg/kg,Causes recumbent sedation up to 120 minutes.
 73,Camelid,Ketamine,,100,mg/ml,2.2,4.4,mg/kg,Induction. Give with diazepam or midazolam
 74,Camelid,Midazolam,IV,5,mg/ml,0.1,0.2,mg/kg,Induction. Give with ketamine.
 75,Camelid,Propofol,IV,10,mg/ml,2,8,mg/kg,"Induction. Use higher dose if not sedated prior to induction. For maintenance anesthesia, give 0.1 – 0.4 mg/kg/min IV after induction."
 76,Camelid,Thiopental,IV,20,mg/ml,4,10,mg/kg,Induction. Use higher dose if not sedated prior to induction
-77,Camelid,Alfaxalone,IV,10,mg/ml,,2,mg/kg,Induction. Give to effect. Recovery is poor in unsedated camelids unless anesthesia is maintained with another drug. Use of sedatives or physical restraint during recovery is recommended.
-78,Camelid,Hypertonic Saline (7.2%),,,,2,5,ml/kg,"Should not be administered more rapidly than 1ml/kg/min, do not repeat dose"
+77,Camelid,Alfaxalone,IV,10,mg/ml,2,2,mg/kg,Induction. Give to effect. Recovery is poor in unsedated camelids unless anesthesia is maintained with another drug. Use of sedatives or physical restraint during recovery is recommended.
+78,Camelid,Hypertonic Saline (7.2%),,,n/a,2,5,ml/kg,"Should not be administered more rapidly than 1ml/kg/min, do not repeat dose"
 79,Camelid,Atropine,IV,,varies,0.02,0.04,mg/kg,Emergnecy bradycardia.
 80,Camelid,Butorphanol,IV:IM:SQ,10,mg/ml,0.02,0.05,mg/kg,
-81,Camelid,Dextrose (50%),IV,,,0.25,0.5,ml/kg,
+81,Camelid,Dextrose (50%),IV,,n/a,0.25,0.5,ml/kg,
 82,Camelid,Ephedrine,IV,50,mg/ml,0.02,0.1,mg/kg,
 83,Camelid,Epinephrine,IV,1,mg/ml,0.006,0.01,mg/kg,
 84,Camelid,Flunixin,IV,50,mg/ml,0.5,1.1,mg/kg,Give 1-2 times daily
 85,Camelid,Glycopyrrolate,IV,0.2,mg/ml,0.005,0.01,mg/kg,
-86,Camelid,Insulin,IV,10,U/ml,,0.1,U/kg,Give after dextrose
+86,Camelid,Insulin,IV,10,U/ml,0.1,0.1,U/kg,Give after dextrose
 87,Camelid,Lidocaine,IV,20,mg/ml,1.3,3,mg/kg,anti - arrhythmia and analgesia. Give slow IV followed by 25-100 µg/kg/min IV.
-88,Camelid,Morphine,IV:IM:SQ:Epidural,15,mg/ml,,0.1,mg/kg,Analgesia. Histamine release with IV administaration.
-89,Camelid,Nalbuphine,IV,20,mg/ml,,0.06,mg/kg,
+88,Camelid,Morphine,IV:IM:SQ:Epidural,15,mg/ml,0.1,0.1,mg/kg,Analgesia. Histamine release with IV administaration.
+89,Camelid,Nalbuphine,IV,20,mg/ml,0.06,0.06,mg/kg,
 90,Camelid,Phenylephrine,,1,mg/ml,0.002,0.004,mg/kg,dilute to 1 mg/ml for infusion
 91,Camelid,Atipamezole,IV,5,mg/ml,0.02,0.05,mg/kg,
 92,Swine,Acepromazine,,10,mg/ml,0.05,0.5,mg/kg,Maximum dose is 15mg
@@ -98,29 +98,29 @@ e_id,animal,drug,method,concentration,concentration_unit,dose_low,dose_high,dose
 97,Swine,Butorphanol,IV:IM:SQ,10,mg/ml,0.2,0.4,mg/kg,
 98,Swine,Fentanyl,IV:IM,0.050,mg/ml,0.002,0.05,mg/kg,
 99,Swine,Morphine,IM,15,mg/ml,0.1,0.5,mg/kg,
-100,Swine,Atipamezole,IM,5,mg/ml,,0.2,mg/kg,
+100,Swine,Atipamezole,IM,5,mg/ml,0.2,0.2,mg/kg,
 101,Swine,Ketamine,IV,100,mg/ml,1.5,2.5,mg/kg,Induction. Give with midazolam or xyalazine.
 102,Swine,Propofol,IV,10,mg/ml,3,8,mg/kg,Induction. Then give 0.1 – 0.6 mg/kg/min IV
 103,Swine,Tiletamine-Zolazepam,IV,100,mg/ml,1.5,2.2,mg/kg,Induction
-104,Swine,Hypertonic Saline (7.2%),,,,2,5,ml/kg,"Give over 5-10min, should not be administered more rapidly than 1ml/kg/min, do not repeat dose."
+104,Swine,Hypertonic Saline (7.2%),,,n/a,2,5,ml/kg,"Give over 5-10min, should not be administered more rapidly than 1ml/kg/min, do not repeat dose."
 105,Swine,Atropine,IV,,varies,0.02,0.04,mg/kg,
 106,Swine,Butorphanol,IV:IM:SQ,10,mg/ml,0.02,0.05,mg/kg,
-107,Swine,Dextrose (50%),IV,,,0.25,0.5,ml/kg,
+107,Swine,Dextrose (50%),IV,,n/a,0.25,0.5,ml/kg,
 108,Swine,Ephedrine,IV,50,mg/ml,0.05,0.1,mg/kg,
 109,Swine,Epinephrine,IV,1,mg/ml,0.006,0.01,mg/kg,
 110,Swine,Fentanyl,IV,0.050,mg/ml,0.002,0.005,mg/kg,Give as a as a bolus followed by 0.1 – 0.5 µg/kg/min IV.
-111,Swine,Flunixin,IV,50,mg/ml,,0.5,mg/kg,
+111,Swine,Flunixin,IV,50,mg/ml,0.5,0.5,mg/kg,
 112,Swine,Glycopyrrolate,IV,0.2,mg/ml,0.005,0.01,mg/kg,
-113,Swine,Insulin,IV,10,U/ml,,0.1,U/kg,Give after dextrose
+113,Swine,Insulin,IV,10,U/ml,0.1,0.1,U/kg,Give after dextrose
 114,Swine,Lidocaine,IV,20,mg/ml,1.3,3,mg/kg,Slow IV. For arhythmias and analgesia. Give as a bolus followed by 25-1000 µg/kg/min IV
-115,Swine,Morphine,IV:IM:SQ:Epidural,15,mg/ml,,0.1,mg/kg,Histamine release with IV admin
+115,Swine,Morphine,IV:IM:SQ:Epidural,15,mg/ml,0.1,0.1,mg/kg,Histamine release with IV admin
 116,Swine,Phenylephrine,,10,mg/ml,0.002,0.004,mg/kg,dilute to 1 mg/ml for infusion
-117,Cattle,Hypertonic Saline (7.2%),IV,,,2,5,ml/kg,"Give over 5-10min, should not be administered more rapidly than 1ml/kg/min, do not repeat dose"
-118,Cattle,Xylazine,Epidural,100,mg/ml,,0.05,mg/kg,Epidural only. dilute with local anesthetic.
-119,Cattle,Detomidine,Epidural,10,mg/ml,,0.04,mg/kg,Epidural. dilute with local anesthetic.
+117,Cattle,Hypertonic Saline (7.2%),IV,,n/a,2,5,ml/kg,"Give over 5-10min, should not be administered more rapidly than 1ml/kg/min, do not repeat dose"
+118,Cattle,Xylazine,Epidural,100,mg/ml,0.05,0.05,mg/kg,Epidural only. dilute with local anesthetic.
+119,Cattle,Detomidine,Epidural,10,mg/ml,0.04,0.04,mg/kg,Epidural. dilute with local anesthetic.
 120,Cattle,Lidocaine,Epidural,20,mg/ml,0.22,0.5,mg/kg,Epidural
-121,Dog,Maropitant,IV,10,mg/ml,,1,mg/kg,
-122,Dog,Maropitant,PO,16:24:60:160,mg/tablet,,2,mg/kg,
+121,Dog,Maropitant,IV,10,mg/ml,1,1,mg/kg,
+122,Dog,Maropitant,PO,16:24:60:160,mg/tablet,2,2,mg/kg,
 123,Dog,Acepromazine,IM,1:10,mg/ml,0.01,0.1,mg/kg,
 124,Dog,Dexmedetomidine,IM,0.5,mg/ml,0.003,0.015,mg/kg,For ongoing sedation give ollowed by 0.05 – 0.3 µg/kg/min IV.
 125,Dog,Dexmedetomidine,Sublingual,0.1,mg/ml,0.004,0.005,mg/kg,
@@ -138,15 +138,15 @@ e_id,animal,drug,method,concentration,concentration_unit,dose_low,dose_high,dose
 137,Dog,Ketamine,IV,100,mg/ml,1,10,mg/kg,Give for induction after prior sedation.
 138,Dog,Tiletamine-Zolazepam,IM,50:100,mg/ml,3,5,mg/kg,
 139,Dog,Trazodone,PO,50:100:150:300,mg/capsule,5,7,mg/kg,
-140,Dog,Gabapentin,PO,100:300:400,mg/capsule,,25,mg/kg,
-141,Cat,Maropitant,IV,10,mg/ml,,1,mg/kg,
-142,Cat,Maropitant,PO,16,mg/tablet,,1,mg/kg,
+140,Dog,Gabapentin,PO,100:300:400,mg/capsule,25,25,mg/kg,
+141,Cat,Maropitant,IV,10,mg/ml,1,1,mg/kg,
+142,Cat,Maropitant,PO,16,mg/tablet,1,1,mg/kg,
 143,Cat,Acepromazine,IM,10,mg/ml,0.01,0.2,mg/kg,
 144,Cat,Dexmedetomidine,IM,0.5,mg/ml,0.005,0.02,mg/kg,
 145,Cat,Medetomidine,IM,1,mg/ml,0.01,0.04,mg/kg,
 146,Cat,Midazolam,IM,5,mg/ml,0.2,0.4,mg/kg,
 147,Cat,Buprenorphine,IM,0.3,mg/ml,0.006,0.01,mg/kg,
-148,Cat,Buprenorphine (Simbadol®),SQ,1.8,mg/ml,,0.24,mg/kg,"Give once daily, three day limit"
+148,Cat,Buprenorphine (Simbadol®),SQ,1.8,mg/ml,0.24,0.24,mg/kg,"Give once daily, three day limit"
 149,Cat,Butorphanol,IM,10,mg/ml,0.2,0.8,mg/kg,
 150,Cat,Fentanyl,IM,0.050,mg/ml,0.002,0.01,mg/kg,
 151,Cat,Hydromorphone,IM,2,mg/ml,0.03,0.05,mg/kg,
@@ -154,7 +154,7 @@ e_id,animal,drug,method,concentration,concentration_unit,dose_low,dose_high,dose
 153,Cat,Methadone,IM,10,mg/ml,0.1,0.3,mg/kg,
 154,Cat,Morphine,IM,,varies,0.1,0.3,mg/kg,
 155,Cat,Oxymorphone,IM,1,mg/ml,0.05,0.1,mg/kg,
-156,Cat,Gabapentin,PO,100:300:400,mg/capsule,,25,mg/kg,
+156,Cat,Gabapentin,PO,100:300:400,mg/capsule,25,25,mg/kg,
 157,Cat,Alfaxalone,IM,10,mg/ml,2,4,mg/kg,Given with (preferred) or following midazolam and an opioid
 158,Cat,Ketamine,,100,mg/ml,3,5,mg/kg,Given following asedative or tranquilizer and an opioid
 159,Cat,Tiletamine-Zolazepam,IM,50,mg/ml,3,5,mg/kg,
