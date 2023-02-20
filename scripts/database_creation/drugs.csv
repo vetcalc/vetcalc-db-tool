@@ -77,7 +77,7 @@ e_id,animal,drug,method,concentration,concentration_unit,dose_low,dose_high,dose
 76,Camelid,Thiopental,IV,20,mg/ml,4,10,mg/kg,Induction. Use higher dose if not sedated prior to induction
 77,Camelid,Alfaxalone,IV,10,mg/ml,,2,mg/kg,Induction. Give to effect. Recovery is poor in unsedated camelids unless anesthesia is maintained with another drug. Use of sedatives or physical restraint during recovery is recommended.
 78,Camelid,Hypertonic Saline (7.2%),,,,2,5,ml/kg,"Should not be administered more rapidly than 1ml/kg/min, do not repeat dose"
-79,Camelid,Atropine,IV,,Varies,0.02,0.04,mg/kg,Emergnecy bradycardia.
+79,Camelid,Atropine,IV,,varies,0.02,0.04,mg/kg,Emergnecy bradycardia.
 80,Camelid,Butorphanol,IV:IM:SQ,10,mg/ml,0.02,0.05,mg/kg,
 81,Camelid,Dextrose (50%),IV,,,0.25,0.5,ml/kg,
 82,Camelid,Ephedrine,IV,50,mg/ml,0.02,0.1,mg/kg,
