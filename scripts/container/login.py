@@ -1,7 +1,8 @@
 import subprocess as sp
 import config as h
 
-db = h.db
+
+db = h.config["db"]
 
 def login_database():
     command = ['podman', 'exec', '-it', f"{db['name']}", 'psql', '-U', 'postgres']

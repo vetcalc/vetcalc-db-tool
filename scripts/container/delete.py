@@ -1,6 +1,6 @@
 import config as h
 
-pod = h.pod
+pod = h.config["pod"]
 
 def rm_database():
     # stop then remove the pod from system

@@ -1,7 +1,7 @@
 import config as h
 
-pod = h.pod
-db = h.db
+pod = h.config["pod"]
+db = h.config["db"]
 
 def start_database():
     # start the pod
