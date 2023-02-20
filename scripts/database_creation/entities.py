@@ -40,9 +40,9 @@ class Animal:
     def __init__(self, name: str):
         self.id = eid("a", 0)
         self.name = name
-        self.temperature = 0 
-        self.heart_rate = 0 
-        self.respiratory_rate = 0 
+        self.temperature = (0, 0)
+        self.heart_rate = (0, 0) 
+        self.respiratory_rate = (0, 0) 
 
 
 class Method:
