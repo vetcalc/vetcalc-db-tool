@@ -4,6 +4,20 @@ Database.
 
 # Why
 
-Code for the drug database using Postgres.
+Here are scripts for managing the Postgres database using podman.
 
-Included is some deployment configure using Podman for containers.
+The scripts are written in Python to promote readability, though the same
+functionality could have been performed in Bash or some other POSIX shell.
+
+Consequently, the scripts are ran with 
+
+```
+python my_script.py
+```
+
+# Also Included
+
+Is a script to convert the csv file in this folder to some python objects.
+The python objects are then used to write some datbase tables in csv format.
+Those csv tables are then imported into Postgres.
+
