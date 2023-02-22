@@ -23,7 +23,7 @@ class EntityId:
         return hash((self.id, self.prefix))
 
 
-    def get(self, no_prefix=False) -> int | str:
+    def get(self, no_prefix=False):
         if no_prefix:
             end_of_prefix = id.get().index("_")
             return int(id.get()[end_of_prefix+1:])

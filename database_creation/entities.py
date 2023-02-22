@@ -1,5 +1,6 @@
 from entity_id import EntityId as eid
 
+
 class Drug:
     ''' 
     Purpose:
@@ -28,7 +29,7 @@ class Dosage:
         self.methods: set[eid] = set()
         self.concentration: tuple[float, str] = tuple()
         self.dose: tuple[float, float] = tuple()
-        self.dose_unit: eid | None = None
+        self.dose_unit = None
         self.notes = ""
 
 
@@ -101,7 +102,7 @@ class Concentration:
     Purpose:
         allows for dosages to have multiple concentrations
     '''
-    def __init__(self, value: float | None, unit_id: eid, dosage_id: eid):
+    def __init__(self, value, unit_id: eid, dosage_id: eid):
         self.id = eid("c", 0)
         self.value = value
         self.unit_id = unit_id
