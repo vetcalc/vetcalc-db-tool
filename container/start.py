@@ -15,7 +15,7 @@ def start_database():
                f"--pod={pod['name']}", 
                '--name', db["name"], 
                '-e', f"POSTGRES_PASSWORD={db['superuser_password']}", 
-               '-v', "./tmp/data:/var/lib/postgresql/data", 
+               '-v', "./data:/var/lib/postgresql/data", 
                '-d', 
                db['registry_image']]
     h.do(command)
