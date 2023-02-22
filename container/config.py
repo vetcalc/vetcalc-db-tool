@@ -2,7 +2,7 @@ import subprocess as sp
 import configparser
 
 config = configparser.ConfigParser()
-config.read("example.ini")
+config.read("../example.ini")
 
 def do(command):
     output = sp.run(command, capture_output=True)

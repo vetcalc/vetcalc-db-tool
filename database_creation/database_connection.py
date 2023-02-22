@@ -1,4 +1,8 @@
 import psycopg2
+import configparser
+
+config = configparser.ConfigParser()
+config.read("../example.ini")
 
 def execute(sql, dry_run=False):
     conn = _create_db_connection()
@@ -15,13 +19,7 @@ def execute(sql, dry_run=False):
 def _create_db_connection():
     conn = None
     try:
-        conn = psycopg2.connect(
-            host="localhost",
-            port="33333",
-            database="vaddb",
-            user="postgres",
-            password="mysecretpassword"
-        )
+        conn = psycopg2.connect(**config["db_connection"])
     except (Exception, psycopg2.DatabaseError) as e:
         print(e)
     finally:
