@@ -57,7 +57,7 @@ class Animal:
         The physiological markers of health are also present.
 
     Attributes:
-        temperature         -- in celsius
+        temperature         -- in fahrenheit 
         heart_rate          -- in beats per minute
         respiratory_rate    -- in breaths per minute
     '''
