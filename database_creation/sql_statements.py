@@ -19,7 +19,7 @@ class AnimalSql:
         return (s.SQL(("DROP TABLE IF EXISTS {tbl} CASCADE;"
            "CREATE TABLE {tbl}("
            "animal_id bigserial PRIMARY KEY, "
-           "name text NOT NULL, "
+           "name text UNIQUE NOT NULL, "
            "temperature_low real NOT NULL, "
            "temperature_high real NOT NULL, "
            "heart_rate_low real NOT NULL, "
@@ -47,7 +47,7 @@ class DrugSql:
         return (s.SQL(("DROP TABLE IF EXISTS {tbl} CASCADE;"
             "CREATE TABLE {tbl}("
             "drug_id bigserial PRIMARY KEY, "
-            "name text NOT NULL"
+            "name text UNIQUE NOT NULL"
             ");")).format(tbl=s.Identifier(self.table_name)), None)
            
  
@@ -69,7 +69,7 @@ class MethodSql:
         return (s.SQL(("DROP TABLE IF EXISTS {tbl} CASCADE;"
             "CREATE TABLE {tbl}("
             "method_id bigserial PRIMARY KEY, "
-            "name text NOT NULL"
+            "name text UNIQUE NOT NULL"
             ");")).format(tbl=s.Identifier(self.table_name)), None)
            
  
@@ -91,7 +91,7 @@ class UnitSql:
         return (s.SQL(("DROP TABLE IF EXISTS {tbl} CASCADE;"
             "CREATE TABLE {tbl}("
             "unit_id bigserial PRIMARY KEY, "
-            "name text NOT NULL"
+            "name text UNIQUE NOT NULL"
             ");")).format(tbl=s.Identifier(self.table_name)), None)
            
  
