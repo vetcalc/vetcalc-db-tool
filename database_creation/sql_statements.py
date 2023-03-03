@@ -168,7 +168,8 @@ class DosagesJoinMethodsSql:
         return (s.SQL(("DROP TABLE IF EXISTS {tbl} CASCADE;"
             "CREATE TABLE {tbl}("
             "dosage_id bigint REFERENCES dosages, "
-            "method_id bigint REFERENCES methods "
+            "method_id bigint REFERENCES methods, "
+            "PRIMARY KEY (dosage_id, method_id) "
             ");")).format(tbl=s.Identifier(self.table_name)), None)
            
  
