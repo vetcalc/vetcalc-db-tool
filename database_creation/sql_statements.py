@@ -115,7 +115,7 @@ class ConcentrationSql:
             "concentration_id bigserial PRIMARY KEY, "
             "value real, "
             "unit_id bigint REFERENCES units, "
-            "dosage_id bigint REFERENCES dosages"
+            "dosage_id bigint REFERENCES dosages ON DELETE CASCADE"
             ");")).format(tbl=s.Identifier(self.table_name)), None)
            
  
@@ -167,7 +167,7 @@ class DosagesJoinMethodsSql:
     def create_table(self):
         return (s.SQL(("DROP TABLE IF EXISTS {tbl} CASCADE;"
             "CREATE TABLE {tbl}("
-            "dosage_id bigint REFERENCES dosages, "
+            "dosage_id bigint REFERENCES dosages ON DELETE CASCADE, "
             "method_id bigint REFERENCES methods, "
             "PRIMARY KEY (dosage_id, method_id) "
             ");")).format(tbl=s.Identifier(self.table_name)), None)
