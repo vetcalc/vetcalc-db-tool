@@ -2,5 +2,6 @@ __pycache__
 **/tmp
 tags
 for_database_import/
+addendum/
 .env
 data/

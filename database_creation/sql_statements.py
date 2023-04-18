@@ -37,6 +37,18 @@ class AnimalSql:
                 )
 
 
+    def update_row(self, values):
+        return (s.SQL(("UPDATE {tbl} " 
+                "SET temperature_low = %s, "
+                "temperature_high = %s, "
+                "heart_rate_low = %s, "
+                "heart_rate_high = %s, "
+                "respiratory_rate_low = %s, "
+                "respiratory_rate_high = %s "
+                "WHERE  name = %s;")).format(tbl=s.Identifier(self.table_name)),
+                ([values[2], values[3], values[4], values[5], values[6], values[7], values[1]])
+                )
+
 class DrugSql:
 
     def __init__(self):
