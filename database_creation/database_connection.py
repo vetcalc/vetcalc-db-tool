@@ -2,7 +2,7 @@ import psycopg2
 import configparser
 
 config = configparser.ConfigParser()
-config.read("../example.ini")
+config.read("../.env")
 
 def execute(sql, dry_run=False):
     conn = _create_db_connection()

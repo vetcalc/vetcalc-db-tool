@@ -15,6 +15,11 @@ Consequently, the scripts are ran with
 python my_script.py
 ```
 
+# Setting config
+
+The provided `example.ini` shows a usable configuration.
+However, the file must be renamed or copied to `.env` for the scripts to work.
+
 # Also Included
 
 Is a script to convert the csv file in this folder to some python objects.
