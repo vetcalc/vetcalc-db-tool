@@ -1,9 +1,13 @@
 import config as h
+import subprocess as sp
 
 pod = h.config["pod"]
 db = h.config["db"]
 
 def start_database():
+    # make the folder where the data is stored if does not exist
+    sp.run(["mkdir", "data"])
+
     # start the pod
     command = ['podman', 'pod', 'create', 
                '--name', pod['name'], 

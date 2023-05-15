@@ -1,9 +1,9 @@
 import csv
 import database_connection as dc
 import sql_statements as ss
+import config as h
 
-
-TABLE_FOLDER = "for_database_import"
+TABLE_FOLDER = h.config["db_conversion"]["for_import_folder"]
 
 def main():
     dc.execute(ss.AnimalSql().create_table())

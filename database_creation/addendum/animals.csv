@@ -1,0 +1,8 @@
+aniaml_id,name,temp_low,temp_high,heart_rate_low,heart_rate_high,respiratory_rate_low,respiratory_rate_high
+a_1,Camelid,99.5,102.0,60,90,10,30
+a_2,Cat,100.0,102.5,110,130,20,30
+a_3,Cattle,100.0,102.5,60,90,26,50
+a_4,Dog,100.0,102.5,60,120,18,24
+a_5,Equine,99.0,101.5,28,48,8,12
+a_6,Sheep Goats,101.0,103.5,60,90,16,34
+a_7,Swine,101.5,103.5,60,90,32,58

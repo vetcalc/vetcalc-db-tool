@@ -1,4 +1,6 @@
-DATABASE_IMPORT_PREFIX = "for_database_import"
+import config as h
+
+DATABASE_IMPORT_PREFIX = h.config["db_conversion"]["for_import_folder"]
 
 def write_tables_as_csv(entities):
     _write_entities_into_csv(entities)

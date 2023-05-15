@@ -1,8 +1,9 @@
 import csv
+import config as h
 
 import entities as ent
 
-INPUT_CSV = "drugs.csv"
+INPUT_CSV = h.config["db_conversion"]["input_csv"]
 
 def make_entities():
     entities = dict()

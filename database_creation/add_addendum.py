@@ -1,9 +1,10 @@
 import csv
 import database_connection as dc
 import sql_statements as ss
+import config as h
 
+TABLE_FOLDER = h.config["db_conversion"]["addendum_folder"]
 
-TABLE_FOLDER = "addendum"
 
 def main():
     write_table_to_database(f"{TABLE_FOLDER}/animals.csv", ss.AnimalSql().update_row)

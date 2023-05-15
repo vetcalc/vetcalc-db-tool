@@ -1,8 +1,5 @@
 import psycopg2
-import configparser
-
-config = configparser.ConfigParser()
-config.read("../.env")
+import config as h
 
 def execute(sql, dry_run=False):
     conn = _create_db_connection()
@@ -19,7 +16,7 @@ def execute(sql, dry_run=False):
 def _create_db_connection():
     conn = None
     try:
-        conn = psycopg2.connect(**config["db_connection"])
+        conn = psycopg2.connect(**h.config["db_connection"])
     except (Exception, psycopg2.DatabaseError) as e:
         print(e)
     finally:
