@@ -1,52 +1,58 @@
-# Name
-This application is called vaddb as in Veterinarian Application Drug
-Database.
+# VetCalc Database
 
-# Why
+##  What
 
-Here are scripts for managing the Postgres database using podman.
+Here is a compose specification for starting a Postgres database container.
 
-The scripts are written in Python to promote readability, though the same
-functionality could have been performed in Bash or some other POSIX shell.
+In addition are some scripts to fill the container with drug data
+found in `database_creation/drugs.csv`
 
-The scripts are combined togethere with main.py
-Consequently, the help for the scripts is printed with
+## Setting config
 
-```
-python main.py -h
-```
+The password for the database should be specified in `db.env` with
+`POSTGRES_PASSWORD=replace-me-with-your-password`
 
-when **inside** the `container` folder.
+A second set of configuration, used by `database_creation/main.py` should be
+specified in `.env`. A complete working example is shown in `example.ini`.
 
-For example, to start the database container, do
+The section named `db_connection` should have the relevant information
+from `db.env` and the `compose.yaml` file for the `database_creation/main.py`
+to connect to the datbase running in the container.
 
-```
-cd container
-python main.py --start
-cd -
-```
+The database files are stored in the `data` folder by default, and may need
+to be created if not already present.
 
-# Setting config
+## Running the container and filling it
 
-The provided `example.ini` shows a usable configuration.
-However, the file must be renamed or copied to `.env` for the scripts to work.
+Start the database container with `podman-compose up -d` if you use podman.
+or `docker-compose up -d` if you use docker.
 
-# Also Included
-
-Is a script to convert the csv file in this folder to some python objects.
-The python objects are then used to write some datbase tables in csv format.
-Those csv tables are then imported into Postgres.
-
-The scripts for the conversion start with the `main.py` inside `database_creation`
-
-**NOTE** the datbase container inside `container` directory must be started
-for the conversion scripts to have something to connect to.
-
-Run the main conversion with
+Once the container is running, move to the `database_creation` directory 
+and run
 
 ```
-cd database_creation
+pip install -r requirements.txt
+``` 
+
+to ensure that the needed packages are installed.
+
+Then run
+
+```
 python main.py --init
-cd -
 ```
+
+to initialize the database with drug information.
+
+You can verify that the initialize worked by connecting to the database with
+
+```
+podman exec -it vetcalc_db_postgres_1 psql -U postgres -d vcdb
+```
+
+(or the docker equivalent).
+
+Note that `vetcalc_db_postgres_1`, `postgres`, and `vcdb` are subject to
+change if the configuration in `compose.yaml` is modified accordingly.
+
 
