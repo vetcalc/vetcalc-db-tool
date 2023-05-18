@@ -22,9 +22,17 @@ if args.init:
 
     if confirmation.lower() == "y":
         print("initializing/resetting the database")
+        
+        print("parsing the main drugs csv")
         csv_from_input.main()
+
+        print("moving the objects into the database")
         csv_to_postgres.main()
+        
+        print("adding extra information")
         add_addendum.main()
+        
+        print("finished the init process")
 
     else:
         print("aborting the process")

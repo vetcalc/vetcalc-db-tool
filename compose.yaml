@@ -3,11 +3,11 @@ services:
   postgres:
     image: docker.io/library/postgres:15.3
     environment:
-      POSTGRES_DB: vcdb
-      POSTGRES_USER: postgres
-    env_file: ./db.env
+      POSTGRES_DB: "${VCDB_DB}"
+      POSTGRES_USER: "${VCDB_USER}"
+      POSTGRES_PASSWORD: "${VCDB_PASSWORD}"
     ports:
-      - "33333:5432"
+      - "${VCDB_PORT}:5432"
     networks:
       back-tier:
         aliases:
