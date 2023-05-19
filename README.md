@@ -51,3 +51,8 @@ python main.py --init
 This will install the needed python packages, and then run the
 initialization process.
 
+## Plan B
+
+In the case that you are unable to use podman-compose or docker-compose,
+`s_alt_up.sh` and `s_alt_down.sh` are provided as a last resort. They are
+hard-coded to use podman.

@@ -1,0 +1,1 @@
+podman run --name=$VCDB_DB -e POSTGRES_PASSWORD=$VCDB_PASSWORD -p $VCDB_PORT:5432 -e POSTGRES_USER=$VCDB_USER -e POSTGRES_DB=$VCDB_DB -v ./data:/var/lib/postgresql/data -d docker.io/library/postgres:15.3
