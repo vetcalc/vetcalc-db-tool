@@ -1,0 +1,1 @@
+$CONTAINER_RUNTIME exec -it $VCDB_DB psql -U $VCDB_USER -d $VCDB_DB
